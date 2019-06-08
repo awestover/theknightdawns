@@ -11,7 +11,7 @@ int main()
 	const sf::Vector2f worldDimensions(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH);
 
 	sf::RenderWindow window;
-	// window.create(sf::VideoMode(800, 800, 32), "RPG GAMMUUU!!", sf::Style::Fullscreen);
+	// window.create(sf::VideoMode(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH, 32), "RPG GAMMUUU!!", sf::Style::Fullscreen);
 	// mainView.setViewport(sf::FloatRect()); // should scale
 	window.create(sf::VideoMode(screenDimensions.x, screenDimensions.y, 32), "RPG GAMMUUU!!");
 	window.setFramerateLimit(60);
