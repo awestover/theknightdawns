@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
 	const int NUM_TILES = 25;
-	const int TILE_WIDTH = 8;
+	const int TILE_WIDTH = 32;
 	const sf::Vector2f screenDimensions(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH);
 	const sf::Vector2f worldDimensions(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH);
 
