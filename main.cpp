@@ -6,12 +6,12 @@ using namespace std;
 int main()
 {
 	const int NUM_TILES = 25;
-	const int TILE_WIDTH = 8;
+	const int TILE_WIDTH = 32;
 	const sf::Vector2f screenDimensions(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH);
 	const sf::Vector2f worldDimensions(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH);
 
 	sf::RenderWindow window;
-	// window.create(sf::VideoMode(800, 800, 32), "RPG GAMMUUU!!", sf::Style::Fullscreen);
+	// window.create(sf::VideoMode(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH, 32), "RPG GAMMUUU!!", sf::Style::Fullscreen);
 	// mainView.setViewport(sf::FloatRect()); // should scale
 	window.create(sf::VideoMode(screenDimensions.x, screenDimensions.y, 32), "RPG GAMMUUU!!");
 	window.setFramerateLimit(60);
