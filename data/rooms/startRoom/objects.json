@@ -1,0 +1,8 @@
+{
+	"objectNames": ["quest1"],
+	"quest1": {
+		"pos": [20,20],
+		"type": "dialogue",
+		"body": "This is some test dialogue"
+	}
+}

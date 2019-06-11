@@ -45,3 +45,11 @@ void Dialogue::draw(sf::RenderWindow *window){
 void Dialogue::setDialogueViewViewport(sf::FloatRect viewport){
 	dialogueView.setViewport(viewport);
 }
+
+void Dialogue::setOpenState(bool isOpen){
+	dialogueOpen = isOpen;
+}
+
+bool Dialogue::isOpen(){
+	return dialogueOpen;
+}

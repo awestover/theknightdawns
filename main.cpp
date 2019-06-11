@@ -1,9 +1,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <fstream>
 #include <stdio.h>
-#include <sstream>
 
 #include "Room.hpp"
 #include "Dialogue.hpp"
@@ -12,7 +10,6 @@
 
 int main()
 {
-	bool dialogueOpen = false;
 	bool fullScreen = false;
 
 	sf::RenderWindow window;
@@ -41,25 +38,8 @@ int main()
 	sf::Sprite dog_sprite;
 	dog_sprite.setTexture(dog_texture);
 
-	sf::Texture rock_texture;
-	rock_texture.loadFromFile("data/imgs/rock.png");
-	sf::Sprite rock_sprite;
-	rock_sprite.setTexture(rock_texture);
-
-	rock_sprite.setScale(TILE_WIDTH/(1.0*rock_sprite.getTextureRect().width), TILE_WIDTH/(1.0*rock_sprite.getTextureRect().height));
-
-	bool obstacles[NUM_TILES][NUM_TILES];
-	std::ifstream fin("data/rooms/startRoom/obstacles.txt");
-	for(int i = 0; i < NUM_TILES; i++){
-		for(int j = 0; j < NUM_TILES; j++){
-			char cur;
-			fin >> cur;
-			if(cur == '1')
-				obstacles[i][j] = true;
-			else
-				obstacles[i][j] = false;
-		}
-	}
+	Room startRoom;
+	startRoom.initialize();
 
 	sf::Vector2f cameraPos; 
 	cameraPos.x = 0; cameraPos.y = 0;
@@ -93,7 +73,7 @@ int main()
 					else if(event.key.code == sf::Keyboard::S)
 						userPos.y += 10;
 					else if(event.key.code == sf::Keyboard::C)
-						dialogueOpen = false;
+						dialogue.setOpenState(false);
 				}
 			}
 		}
@@ -107,28 +87,13 @@ int main()
 		bg_sprite.setTextureRect(sf::IntRect(0, 0, WOLRD_DIMENSIONS.x, WOLRD_DIMENSIONS.y));
 		window.draw(bg_sprite);
 
-		// draw objects on top of background
-		for(int i = 0; i < NUM_TILES; i++){
-			for(int j = 0; j < NUM_TILES; j++){
-				if(obstacles[i][j]){
-					const sf::Vector2f cur_pos(TILE_WIDTH*j, TILE_WIDTH*i);
-					rock_sprite.setPosition(cur_pos);
-					window.draw(rock_sprite);
-					if(tileHitsTile(cur_pos, dog_sprite.getPosition())){
-						dialogueOpen = true;
-						std::stringstream ss;
-						ss<<"collision with: "<<i<<","<<j;
-						dialogue.updateText(ss.str());
-					}
-				}
-			}
-		}
-		window.draw(rock_sprite);
+		startRoom.draw(&window);
+		startRoom.handleCollisions(&dog_sprite, &dialogue);
 
 		dog_sprite.setPosition(userPos);
 		window.draw(dog_sprite);
 
-		if(dialogueOpen){
+		if(dialogue.isOpen()){
 			dialogue.draw(&window);
 		}
 

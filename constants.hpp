@@ -1,5 +1,6 @@
 #ifndef CONSTANTS
 #define CONSTANTS
+#include <SFML/Graphics.hpp>
 // NOTE: tilemap is 32*64 X 32*64
 const int NUM_TILES = 32;
 const int TILE_WIDTH = 64;

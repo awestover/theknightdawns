@@ -1,3 +1,8 @@
+# file I/O
+  Beautiful tool for jsons:
+    https://github.com/nlohmann/json
+  `brew tap nlohmann/json`
+  `brew install nlohmann-json`
 
 # rendering 
   view: center
