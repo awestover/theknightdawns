@@ -9,9 +9,10 @@ using namespace std;
 // PLZ DONT CHANGE THESE, the tilemap is 2048 by 2048 and 32*64=2048
 const int NUM_TILES = 32;
 const int TILE_WIDTH = 64;
-const sf::Vector2f SCREEN_DIMENSIONS(800,600);
+const sf::Vector2f SCREEN_DIMENSIONS(1024, 256*3);
 const sf::Vector2f WOLRD_DIMENSIONS(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH);
 const sf::Vector2f DIALOGUE_DIMENSIONS(SCREEN_DIMENSIONS.x, 100);
+const float DIALOGUE_VIEWPORT_RELATIVE_HEIGHT = 0.2;
 enum TILE_TYPES { EMPTY, WALL, OTHER };
 
 bool dialogueOpen = false;
@@ -33,10 +34,19 @@ bool tileHitsTile(sf::Vector2f posA, sf::Vector2f posB){
 	return xIn && yIn;
 }
 
-void scaleMainView(sf::RenderWindow *window, sf::View *mainView){
-	float rectWidth = SCREEN_DIMENSIONS.x/window->getSize().x;
-	float rectHeight = SCREEN_DIMENSIONS.y/window->getSize().y;
-	mainView->setViewport(sf::FloatRect((1-rectWidth)/2,(1-rectHeight)/2,rectWidth,rectHeight));
+void scaleViews(sf::RenderWindow *window, sf::View *mainView, sf::View *dialogueView){
+	float ratioX = window->getSize().x/SCREEN_DIMENSIONS.x;
+	float ratioY = window->getSize().y/SCREEN_DIMENSIONS.y;
+	if(ratioX < ratioY){
+		float newRatioY = SCREEN_DIMENSIONS.y*ratioX/window->getSize().y;
+		mainView->setViewport(sf::FloatRect(0.0,(1-newRatioY)*0.5f,1.0,newRatioY));
+		dialogueView->setViewport(sf::FloatRect(0.0,1.0-DIALOGUE_VIEWPORT_RELATIVE_HEIGHT*newRatioY-(1-newRatioY)*0.5f,1.0,DIALOGUE_VIEWPORT_RELATIVE_HEIGHT*newRatioY));
+	}
+	else{
+		float newRatioX = SCREEN_DIMENSIONS.x*ratioY/window->getSize().x;
+		mainView->setViewport(sf::FloatRect((1-newRatioX)*0.5f, 0.0f, newRatioX, 1.0f));
+		dialogueView->setViewport(sf::FloatRect((1-newRatioX)*0.5f,1.0-DIALOGUE_VIEWPORT_RELATIVE_HEIGHT,newRatioX,DIALOGUE_VIEWPORT_RELATIVE_HEIGHT)); // this draws from top left
+	}
 }
 
 int main()
@@ -51,12 +61,15 @@ int main()
 	window.setFramerateLimit(60);
 
 	sf::View mainView;
-	mainView.reset(sf::FloatRect(SCREEN_DIMENSIONS.x/2, SCREEN_DIMENSIONS.y/2, SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y));
+	mainView.setSize(sf::Vector2f(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y));
 	mainView.setViewport(sf::FloatRect(0.0, 0.0, 1.0, 1.0));
-	scaleMainView(&window, &mainView);
 
-	sf::View dialogueView(sf::FloatRect(DIALOGUE_DIMENSIONS.x/2, DIALOGUE_DIMENSIONS.y/2, DIALOGUE_DIMENSIONS.x, DIALOGUE_DIMENSIONS.y));
-	dialogueView.setViewport(sf::FloatRect(0.0,0.8,1.0,0.2));
+	sf::View dialogueView;
+	dialogueView.setSize(DIALOGUE_DIMENSIONS);
+	dialogueView.setCenter(0.5f*DIALOGUE_DIMENSIONS);
+	dialogueView.setViewport(sf::FloatRect(0.0,1.0-DIALOGUE_VIEWPORT_RELATIVE_HEIGHT,1.0,DIALOGUE_VIEWPORT_RELATIVE_HEIGHT));
+
+	scaleViews(&window, &mainView, &dialogueView);
 
 	// it'd be nice if this code all happened in a different file, or at least in a more organized fashion
 	// maybe do a vector of textures and sprites?
@@ -84,12 +97,12 @@ int main()
 	}
 	sf::Text dialogueText;
 	dialogueText.setFont(font);
-	dialogueText.setCharacterSize(TILE_WIDTH);
+	dialogueText.setCharacterSize(20);
 	dialogueText.setFillColor(sf::Color::Red);
-	dialogueText.setPosition(DIALOGUE_DIMENSIONS.x/2, DIALOGUE_DIMENSIONS.y/2); // WHAT is this doing???
+	dialogueText.setPosition(0.0f, 0.0f); // WHAT is this doing???
 
 	sf::RectangleShape dialogueBackdrop(sf::Vector2f(DIALOGUE_DIMENSIONS.x, DIALOGUE_DIMENSIONS.y));
-	dialogueBackdrop.setPosition(DIALOGUE_DIMENSIONS.x/2, DIALOGUE_DIMENSIONS.y/2); // are positions allways centers???????? does this mean my collision detection code is wrong?
+	dialogueBackdrop.setPosition(0.0f, 0.0f); 
 
 	TILE_TYPES mapData[NUM_TILES][NUM_TILES];
 	ifstream fin("data/map1.txt");
@@ -120,9 +133,7 @@ int main()
 			}
 			else if (event.type == sf::Event::Resized)
 			{
-				float rectWidth = SCREEN_DIMENSIONS.x/window.getSize().x;
-				float rectHeight = SCREEN_DIMENSIONS.y/window.getSize().y;
-				mainView.setViewport(sf::FloatRect((1-rectWidth)/2,(1-rectHeight)/2,rectWidth,rectHeight));
+				scaleViews(&window, &mainView, &dialogueView);
 			}
 			else if (event.type == sf::Event::KeyPressed)
 			{
