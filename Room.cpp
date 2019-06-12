@@ -16,7 +16,7 @@ void Room::initialize(){
 	rock_sprite.setTexture(rock_texture);
 	rock_sprite.setScale(TILE_WIDTH/(1.0*rock_sprite.getTextureRect().width), TILE_WIDTH/(1.0*rock_sprite.getTextureRect().height));
 
-	dialogue_prompt_texture.loadFromFile("data/imgs/dialoguePrompt.jpeg");
+	dialogue_prompt_texture.loadFromFile("data/imgs/dialoguePrompt.png");
 	dialogue_prompt_sprite.setTexture(dialogue_prompt_texture);
 	dialogue_prompt_sprite.setScale(TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().width), TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().height));
 

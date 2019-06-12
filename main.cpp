@@ -9,8 +9,7 @@
 #include "constants.hpp"
 #include "utilityFunctions.hpp"
 
-int main()
-{
+int main() {
 	bool fullScreen = false;
 
 	sf::RenderWindow window;

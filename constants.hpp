@@ -10,4 +10,15 @@ const sf::Vector2f DIALOGUE_DIMENSIONS(SCREEN_DIMENSIONS.x, 100);
 const float DIALOGUE_VIEWPORT_RELATIVE_HEIGHT = 0.2;
 const sf::Color BLACK(0,0,0);
 const int FRAME_RATE = 60;
+/*! \enum DIRECTIONS
+ * in my sprite sheets we are gonna follow the conventions that
+ * 	- sprites are TILE_WIDTH X TILE_WIDTH
+ * 	- each row of sprites has the animations for a sprite in a given dirrection
+ * 	- each row represents a different direction
+ * 	- 1st row is right
+ * 	- 2nd row is left
+ * 	- 3rd row is up
+ * 	- 4th row is down
+ */
+enum DIRECTIONS { RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3 };
 #endif // CONSTANTS

@@ -4,10 +4,6 @@
 #include "utilityFunctions.hpp"
 #include "constants.hpp"
 
-// float abs(float x){
-//     return ((x<0) ? -x : x);
-// }
-
 int sgn(int x){
 	return (x>0) - (x<0);
 }
