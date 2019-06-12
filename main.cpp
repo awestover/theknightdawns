@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <stdio.h>
+#include <string>
+#include <fstream>
 
 #include "Player.hpp"
 #include "Room.hpp"
@@ -25,8 +27,19 @@ int main() {
 	dialogue.initialize();
 	scaleViews(&window, &mainView, &dialogue);
 
-	Room startRoom;
-	startRoom.initialize();
+	std::ifstream roomFin("data/rooms.txt");
+	int numRooms;
+	roomFin>>numRooms;
+	std::string roomNames[numRooms];
+	for (int i = 0; i < numRooms; ++i) {
+		roomFin>>roomNames[i];
+	}
+
+	Room rooms[numRooms];
+	for (int i = 0; i < numRooms; ++i) {
+		rooms[i].initialize(roomNames[i]);
+	}
+	Room startRoom = rooms[0];
 
 	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;

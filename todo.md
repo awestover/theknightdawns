@@ -1,4 +1,5 @@
 
+#initialize is nasty, this should just happen when you create a new instance of the object FIGURE OUT HOW cpp objects work man
 # add inventory
 
 # multiple rooms

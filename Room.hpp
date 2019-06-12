@@ -2,6 +2,7 @@
 #define ROOM
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
+#include <string>
 
 #include "constants.hpp"
 #include "Dialogue.hpp"
@@ -11,8 +12,9 @@ class Room {
 		json objects;
 		sf::Texture rock_texture, dialogue_prompt_texture, bg_texture;
 		sf::Sprite rock_sprite, dialogue_prompt_sprite, bg_sprite;
+		std::string roomName;
 	public:
-		void initialize();
+		void initialize(std::string);
 		void draw(sf::RenderWindow *window);
 		bool collidesWithObstacles(sf::Vector2i pos);
 		void handleObjectCollisions(sf::Vector2i pos, Dialogue *dialogue);

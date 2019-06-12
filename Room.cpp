@@ -7,7 +7,9 @@
 #include "utilityFunctions.hpp"
 #include "Room.hpp"
 
-void Room::initialize(){
+void Room::initialize(std::string roomName){
+	this->roomName = roomName;
+
 	bg_texture.loadFromFile("data/imgs/tileMap.png");
 	bg_sprite.setTexture(bg_texture);
 	bg_sprite.setTextureRect(sf::IntRect(0, 0, WOLRD_DIMENSIONS.x, WOLRD_DIMENSIONS.y)); // seems sketchy....
