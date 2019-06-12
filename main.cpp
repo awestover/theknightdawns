@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "Player.hpp"
 #include "Room.hpp"
 #include "Dialogue.hpp"
 #include "constants.hpp"
@@ -21,77 +22,58 @@ int main()
 
 	sf::View mainView;
 	mainView.setSize(sf::Vector2f(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y));
-
 	Dialogue dialogue;
 	dialogue.initialize();
-
 	scaleViews(&window, &mainView, &dialogue);
-
-	// Load images
-	sf::Texture bg_texture;
-	bg_texture.loadFromFile("data/imgs/tileMap.png");
-	sf::Sprite bg_sprite;
-	bg_sprite.setTexture(bg_texture);
-
-	sf::Texture dog_texture;
-	dog_texture.loadFromFile("data/imgs/dog.png");
-	sf::Sprite dog_sprite;
-	dog_sprite.setTexture(dog_texture);
 
 	Room startRoom;
 	startRoom.initialize();
 
-	sf::Vector2f cameraPos; 
+	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;
-	sf::Vector2f userPos(TILE_WIDTH, TILE_WIDTH);
+	Player player;
+	player.initialize();
 
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
+        while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
-			else if (event.type == sf::Event::Resized)
-			{
+			else if (event.type == sf::Event::Resized) {
 				scaleViews(&window, &mainView, &dialogue);
 			}
-			else if (event.type == sf::Event::KeyPressed)
-			{
+			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Q)
 					window.close();
-				else{
-					sf::Vector2f proposedPos(userPos.x, userPos.y);
-					if(event.key.code == sf::Keyboard::A)
-						userPos.x -= 10;
-					else if(event.key.code == sf::Keyboard::D)
-						userPos.x += 10;
-					else if(event.key.code == sf::Keyboard::W)
-						userPos.y -= 10;
-					else if(event.key.code == sf::Keyboard::S)
-						userPos.y += 10;
-					else if(event.key.code == sf::Keyboard::C)
+				else if(event.key.code == sf::Keyboard::C)
 						dialogue.setOpenState(false);
+				else{
+					sf::Vector2f proposedPos(player.getPos().x, player.getPos().y);
+					if(event.key.code == sf::Keyboard::A)
+						proposedPos.x -= 10;
+					else if(event.key.code == sf::Keyboard::D)
+						proposedPos.x += 10;
+					else if(event.key.code == sf::Keyboard::W)
+						proposedPos.y -= 10;
+					else if(event.key.code == sf::Keyboard::S)
+						proposedPos.y += 10;
+					if(!startRoom.collidesWithObstacles(proposedPos)){
+						player.setPos(proposedPos.x, proposedPos.y);
+					}
 				}
 			}
 		}
 
-		updateCameraPos(&cameraPos, userPos);
+		updateCameraPos(&cameraPos, player.getPos());
 		mainView.setCenter(cameraPos);
 
         window.clear(BLACK);
 		window.setView(mainView);
 
-		bg_sprite.setTextureRect(sf::IntRect(0, 0, WOLRD_DIMENSIONS.x, WOLRD_DIMENSIONS.y));
-		window.draw(bg_sprite);
-
 		startRoom.draw(&window);
-		startRoom.handleCollisions(&dog_sprite, &dialogue);
-
-		dog_sprite.setPosition(userPos);
-		window.draw(dog_sprite);
+		startRoom.handleObjectCollisions(player.getPos(), &dialogue);
+		player.draw(&window);
 
 		if(dialogue.isOpen()){
 			dialogue.draw(&window);

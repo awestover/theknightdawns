@@ -1,8 +1,12 @@
+[ 
 {
-	"objectNames": ["quest1"],
-	"quest1": {
-		"pos": [20,20],
-		"type": "dialogue",
-		"body": "This is some test dialogue"
-	}
+	"pos": [8,15],
+	"type": "dialogue",
+	"body": {"title": "quest, part 1", "description":"This is the first quest"}
+},
+{
+	"pos": [5,10],
+	"type": "dialogue",
+	"body": {"title": "quest, part 2", "description":"This is a follow up quest"}
 }
+]

@@ -8,9 +8,17 @@
 #include "Room.hpp"
 
 void Room::initialize(){
+	bg_texture.loadFromFile("data/imgs/tileMap.png");
+	bg_sprite.setTexture(bg_texture);
+	bg_sprite.setTextureRect(sf::IntRect(0, 0, WOLRD_DIMENSIONS.x, WOLRD_DIMENSIONS.y)); // seems sketchy....
+
 	rock_texture.loadFromFile("data/imgs/rock.png");
 	rock_sprite.setTexture(rock_texture);
 	rock_sprite.setScale(TILE_WIDTH/(1.0*rock_sprite.getTextureRect().width), TILE_WIDTH/(1.0*rock_sprite.getTextureRect().height));
+
+	dialogue_prompt_texture.loadFromFile("data/imgs/dialoguePrompt.jpeg");
+	dialogue_prompt_sprite.setTexture(dialogue_prompt_texture);
+	dialogue_prompt_sprite.setScale(TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().width), TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().height));
 
 	std::ifstream obstacles_fin("data/rooms/startRoom/obstacles.txt");
 	for(int i = 0; i < NUM_TILES; i++){
@@ -23,11 +31,12 @@ void Room::initialize(){
 
 	std::ifstream objects_fin("data/rooms/startRoom/objects.json");
 	objects_fin >> objects;
-	std::cout<<objects["objectNames"]<<std::endl;
 
 }
 
 void Room::draw(sf::RenderWindow *window){
+	window->draw(bg_sprite);
+
 	for(int i = 0; i < NUM_TILES; i++){
 		for(int j = 0; j < NUM_TILES; j++){
 			if(obstacles[i][j]){
@@ -38,33 +47,39 @@ void Room::draw(sf::RenderWindow *window){
 		}
 	}
 
-	sf::Vector2f tmp(objects["quest1"]["pos"][0], objects["quest1"]["pos"][1]);
-	tmp = tmp*(1.0f*TILE_WIDTH);
-	rock_sprite.setPosition(tmp);
-	window->draw(rock_sprite);
+	for(json::iterator it = objects.begin(); it!=objects.end(); ++it){
+		sf::Vector2f tmp((*it)["pos"][0], (*it)["pos"][1]);
+		tmp = tmp*(1.0f*TILE_WIDTH);
+		dialogue_prompt_sprite.setPosition(tmp);
+		window->draw(dialogue_prompt_sprite);
+	}
 }
 
-void Room::handleCollisions(sf::Sprite *dog_sprite, Dialogue *dialogue){
+// Given: position of the top left corner of a rectangle with dimensions TILE_WIDTH by TILE_WIDTH
+// Returns true if the position overlaps with any obstacle tiles
+bool Room::collidesWithObstacles(sf::Vector2f pos){
 	for(int i = 0; i < NUM_TILES; i++){
 		for(int j = 0; j < NUM_TILES; j++){
 			if(obstacles[i][j]){
 				const sf::Vector2f cur_pos(TILE_WIDTH*j, TILE_WIDTH*i);
-				if(tileHitsTile(cur_pos, dog_sprite->getPosition())){
-					dialogue->setOpenState(true);
-					std::stringstream ss;
-					ss<<"collision with: "<<i<<","<<j;
-					dialogue->updateText(ss.str());
+				if(tileHitsTile(cur_pos, pos)){
+					return true;
 				}
 			}
 		}
 	}
+	return false;
+}
 
-	sf::Vector2f tmp(objects["quest1"]["pos"][0], objects["quest1"]["pos"][1]);
-	tmp = tmp*(1.0f*TILE_WIDTH);
-	if(tileHitsTile(tmp, dog_sprite->getPosition())){
-		dialogue->setOpenState(true);
-		if(objects["quest1"]["type"] == "dialogue"){
-			dialogue->updateText(objects["quest1"]["body"]);
+void Room::handleObjectCollisions(sf::Vector2f pos, Dialogue *dialogue){
+	for(json::iterator it = objects.begin(); it!=objects.end(); ++it){
+		sf::Vector2f tmp((*it)["pos"][0], (*it)["pos"][1]);
+		tmp = tmp*(1.0f*TILE_WIDTH);
+		if(tileHitsTile(tmp, pos)){
+			dialogue->setOpenState(true);
+			if((*it)["type"] == "dialogue"){
+				dialogue->updateText((*it)["body"]["description"], (*it)["body"]["title"]);
+			}
 		}
 	}
 }

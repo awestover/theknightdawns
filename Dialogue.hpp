@@ -7,12 +7,11 @@ class Dialogue{
 		bool dialogueOpen = false;
 		sf::View dialogueView;
 		sf::Font font;
-		sf::Text dialogueText;
-		sf::Text dialogueClose;
+		sf::Text dialogueText, dialogueTitle, dialogueClose;
 		sf::Vertex dialogueBackdrop[4];
 	public:
 		void initialize();
-		void updateText(std::string newText);
+		void updateText(std::string newText, std::string newTitle);
 		void draw(sf::RenderWindow *window);
 		void setDialogueViewViewport(sf::FloatRect viewport);
 		void setOpenState(bool isOpen);

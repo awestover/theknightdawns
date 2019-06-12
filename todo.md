@@ -1,5 +1,9 @@
 
-# compartmentalize it way better into lots of modular files
+# add inventory
+
+# multiple rooms
+
+# make sure we aren't rendering stuff off screen!!
 
 # get good graphics:  
-https://itch.io/game-assets/free/tag-tilemap
+  [some free assets](https://itch.io/game-assets/free/tag-tilemap)
