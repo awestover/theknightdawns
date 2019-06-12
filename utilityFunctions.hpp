@@ -1,6 +1,8 @@
 #ifndef UTILITY_FUNCTIONS
 #define UTILITY_FUNCTIONS
 #include "Dialogue.hpp"
+// float abs(float x);
+int sgn(int x);
 float mint(float x, float y);
 float maxt(float x, float y);
 void updateCameraPos(sf::Vector2f *cameraPos, sf::Vector2f userPos);

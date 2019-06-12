@@ -14,7 +14,7 @@ class Room {
 	public:
 		void initialize();
 		void draw(sf::RenderWindow *window);
-		bool collidesWithObstacles(sf::Vector2f pos);
-		void handleObjectCollisions(sf::Vector2f pos, Dialogue *dialogue);
+		bool collidesWithObstacles(sf::Vector2i pos);
+		void handleObjectCollisions(sf::Vector2i pos, Dialogue *dialogue);
 };
 #endif // ROOM

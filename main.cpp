@@ -21,7 +21,7 @@ int main()
 	window.setFramerateLimit(FRAME_RATE);
 
 	sf::View mainView;
-	mainView.setSize(sf::Vector2f(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y));
+	mainView.setSize(SCREEN_DIMENSIONS);
 	Dialogue dialogue;
 	dialogue.initialize();
 	scaleViews(&window, &mainView, &dialogue);
@@ -48,31 +48,40 @@ int main()
 					window.close();
 				else if(event.key.code == sf::Keyboard::C)
 						dialogue.setOpenState(false);
-				else{
-					sf::Vector2f proposedPos(player.getPos().x, player.getPos().y);
-					if(event.key.code == sf::Keyboard::A)
-						proposedPos.x -= 10;
-					else if(event.key.code == sf::Keyboard::D)
-						proposedPos.x += 10;
-					else if(event.key.code == sf::Keyboard::W)
-						proposedPos.y -= 10;
-					else if(event.key.code == sf::Keyboard::S)
-						proposedPos.y += 10;
-					if(!startRoom.collidesWithObstacles(proposedPos)){
-						player.setPos(proposedPos.x, proposedPos.y);
-					}
+			}
+		}
+
+		if(player.positionsSynced()){
+			bool oneUpDownPressed = ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)) ^ (sf::Keyboard::isKeyPressed(sf::Keyboard::D)));
+			bool oneLeftRightPressed = ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) ^ (sf::Keyboard::isKeyPressed(sf::Keyboard::S)));
+			if(oneUpDownPressed ^ oneLeftRightPressed){
+				sf::Vector2i proposedPos(player.getTilePos().x, player.getTilePos().y);
+				if(oneUpDownPressed){
+					if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+						proposedPos.x -= 1;
+					else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+						proposedPos.x += 1;
+				}
+				else { // oneUpDownPressed
+					if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+						proposedPos.y -= 1;
+					else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+						proposedPos.y += 1;
+				}
+				if(!startRoom.collidesWithObstacles(proposedPos)){
+					player.setPos(proposedPos.x, proposedPos.y);
 				}
 			}
 		}
 
-		updateCameraPos(&cameraPos, player.getPos());
+		updateCameraPos(&cameraPos, player.getDrawPos());
 		mainView.setCenter(cameraPos);
 
         window.clear(BLACK);
 		window.setView(mainView);
 
 		startRoom.draw(&window);
-		startRoom.handleObjectCollisions(player.getPos(), &dialogue);
+		startRoom.handleObjectCollisions(player.getTilePos(), &dialogue);
 		player.draw(&window);
 
 		if(dialogue.isOpen()){
@@ -81,6 +90,7 @@ int main()
 
         window.display();
     }
+
     return 0;
 }
 

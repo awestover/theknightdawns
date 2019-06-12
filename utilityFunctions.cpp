@@ -4,6 +4,14 @@
 #include "utilityFunctions.hpp"
 #include "constants.hpp"
 
+// float abs(float x){
+//     return ((x<0) ? -x : x);
+// }
+
+int sgn(int x){
+	return (x>0) - (x<0);
+}
+
 float mint(float x, float y){
 	return x > y ? y : x;
 }
@@ -28,12 +36,11 @@ void updateCameraPos(sf::Vector2f *cameraPos, sf::Vector2f userPos){
 
 // template <typename T>
 // sf::Rect<T>
-
-bool tileHitsTile(sf::Vector2f posA, sf::Vector2f posB){
-	bool xIn = mint(posA.x + TILE_WIDTH, posB.x + TILE_WIDTH) > maxt(posA.x, posB.x);
-	bool yIn = mint(posA.y + TILE_WIDTH, posB.y + TILE_WIDTH) > maxt(posA.y, posB.y);
-	return xIn && yIn;
-}
+// bool tileHitsTile(sf::Vector2f posA, sf::Vector2f posB){
+//     bool xIn = mint(posA.x + TILE_WIDTH, posB.x + TILE_WIDTH) > maxt(posA.x, posB.x);
+//     bool yIn = mint(posA.y + TILE_WIDTH, posB.y + TILE_WIDTH) > maxt(posA.y, posB.y);
+//     return xIn && yIn;
+// }
 
 void scaleViews(sf::RenderWindow *window, sf::View *mainView, Dialogue *dialogue){
 	float ratioX = window->getSize().x/SCREEN_DIMENSIONS.x;

@@ -7,7 +7,7 @@
 
 void Dialogue::initialize(){
 	dialogueView.setSize(DIALOGUE_DIMENSIONS);
-	dialogueView.setCenter(0.5f*DIALOGUE_DIMENSIONS);
+	dialogueView.setCenter(DIALOGUE_DIMENSIONS*0.5f);
 
 	if(!font.loadFromFile("data/arial.ttf")){
 		std::cout<<"ERROR loading arial font"<<std::endl;
@@ -60,3 +60,4 @@ void Dialogue::setOpenState(bool isOpen){
 bool Dialogue::isOpen(){
 	return dialogueOpen;
 }
+

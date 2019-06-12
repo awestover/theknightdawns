@@ -57,12 +57,11 @@ void Room::draw(sf::RenderWindow *window){
 
 // Given: position of the top left corner of a rectangle with dimensions TILE_WIDTH by TILE_WIDTH
 // Returns true if the position overlaps with any obstacle tiles
-bool Room::collidesWithObstacles(sf::Vector2f pos){
+bool Room::collidesWithObstacles(sf::Vector2i pos){
 	for(int i = 0; i < NUM_TILES; i++){
 		for(int j = 0; j < NUM_TILES; j++){
 			if(obstacles[i][j]){
-				const sf::Vector2f cur_pos(TILE_WIDTH*j, TILE_WIDTH*i);
-				if(tileHitsTile(cur_pos, pos)){
+				if(pos.x == j && pos.y == i){
 					return true;
 				}
 			}
@@ -71,11 +70,10 @@ bool Room::collidesWithObstacles(sf::Vector2f pos){
 	return false;
 }
 
-void Room::handleObjectCollisions(sf::Vector2f pos, Dialogue *dialogue){
+void Room::handleObjectCollisions(sf::Vector2i pos, Dialogue *dialogue){
 	for(json::iterator it = objects.begin(); it!=objects.end(); ++it){
-		sf::Vector2f tmp((*it)["pos"][0], (*it)["pos"][1]);
-		tmp = tmp*(1.0f*TILE_WIDTH);
-		if(tileHitsTile(tmp, pos)){
+		sf::Vector2i tmp((*it)["pos"][0], (*it)["pos"][1]);
+		if(pos == tmp){
 			dialogue->setOpenState(true);
 			if((*it)["type"] == "dialogue"){
 				dialogue->updateText((*it)["body"]["description"], (*it)["body"]["title"]);

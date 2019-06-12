@@ -5,11 +5,15 @@ class Player{
 	private:
 		sf::Texture dog_texture;
 		sf::Sprite dog_sprite;
-		sf::Vector2f pos;
+		sf::Vector2f draw_pos;
+		sf::Vector2i tile_pos;
+		float draw_catchup_speed = 4;
 	public:
 		void initialize();
 		void draw(sf::RenderWindow *window);
-		void setPos(float xpos, float ypos);
-		sf::Vector2f getPos();
+		void setPos(int xpos, int ypos);
+		sf::Vector2i getTilePos();
+		sf::Vector2f getDrawPos();
+		bool positionsSynced();
 };
 #endif /* ifndef PLAYER */

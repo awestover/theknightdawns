@@ -1,4 +1,6 @@
 
+# discrete walking + animation
+
 # add inventory
 
 # multiple rooms
