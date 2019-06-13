@@ -1,9 +1,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <iterator>
 #include <stdio.h>
 #include <string>
 #include <fstream>
+#include <map>
 
 #include "Player.hpp"
 #include "Room.hpp"
@@ -30,21 +32,22 @@ int main() {
 	std::ifstream roomFin("data/rooms.txt");
 	int numRooms;
 	roomFin>>numRooms;
-	std::string roomNames[numRooms];
+	std::map<std::string, int> roomNameIdxs;
 	for (int i = 0; i < numRooms; ++i) {
-		roomFin>>roomNames[i];
+		std::string tmp;
+		roomFin>>tmp;
+		roomNameIdxs.insert(std::pair<std::string, int>(tmp, i));
 	}
 
 	Room rooms[numRooms];
-	for (int i = 0; i < numRooms; ++i) {
-		rooms[i].initialize(roomNames[i]);
+	for(std::map<std::string, int>::iterator itr = roomNameIdxs.begin(); itr != roomNameIdxs.end(); ++itr){
+		rooms[itr->second].initialize(itr->first);
 	}
-	Room startRoom = rooms[0];
 
 	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;
 	Player player;
-	player.initialize();
+	player.initialize(rooms[0].getName());
 
     while (window.isOpen()) {
         sf::Event event;
@@ -80,7 +83,7 @@ int main() {
 					else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 						proposedPos.y += 1;
 				}
-				if(!startRoom.collidesWithObstacles(proposedPos)){
+				if(!rooms[roomNameIdxs[player.getCurRoom()]].collidesWithObstacles(proposedPos)){
 					player.setPos(proposedPos.x, proposedPos.y);
 				}
 			}
@@ -92,8 +95,8 @@ int main() {
         window.clear(BLACK);
 		window.setView(mainView);
 
-		startRoom.draw(&window);
-		startRoom.handleObjectCollisions(player.getTilePos(), &dialogue);
+		rooms[roomNameIdxs[player.getCurRoom()]].draw(&window);
+		rooms[roomNameIdxs[player.getCurRoom()]].handleObjectCollisions(&player, &dialogue);
 		player.draw(&window);
 
 		if(dialogue.isOpen()){

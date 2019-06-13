@@ -6,16 +6,17 @@
 #include "constants.hpp"
 #include "utilityFunctions.hpp"
 
-void Player::initialize() {
+void Player::initialize(std::string roomName) {
+	curRoom = roomName;
 	tile_pos.x = 1; tile_pos.y = 1;
 	draw_pos.x = tile_pos.x*TILE_WIDTH; draw_pos.y = tile_pos.y*TILE_WIDTH; 
-	dog_texture.loadFromFile("data/imgs/turtle_sheet.png");
-	dog_sprite.setTexture(dog_texture);
-	dog_sprite.setTextureRect(sf::IntRect(0,0,TILE_WIDTH,TILE_WIDTH));
+	texture.loadFromFile("data/imgs/turtle_sheet.png");
+	sprite.setTexture(texture);
+	sprite.setTextureRect(sf::IntRect(0,0,TILE_WIDTH,TILE_WIDTH));
 }
 
 void Player::draw(sf::RenderWindow *window) {
-	dog_sprite.setPosition(draw_pos);
+	sprite.setPosition(draw_pos);
 
 	if(!positionsSynced()){
 		int dx = TILE_WIDTH*tile_pos.x - draw_pos.x;
@@ -48,8 +49,8 @@ void Player::draw(sf::RenderWindow *window) {
 		aniState = (aniState + 1) % numAniStates;
 	}
 
-	dog_sprite.setTextureRect(sf::IntRect(TILE_WIDTH*aniState, facing*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-	window->draw(dog_sprite);
+	sprite.setTextureRect(sf::IntRect(TILE_WIDTH*aniState, facing*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
+	window->draw(sprite);
 }
 
 void Player::setPos(int xpos, int ypos){
@@ -71,3 +72,14 @@ bool Player::positionsSynced(){
 	return xSynced & ySynced;
 }
 
+std::string Player::getCurRoom(){
+	return curRoom;
+}
+
+void Player::teleport(std::string newRoom, sf::Vector2i newPos){
+	curRoom = newRoom;
+	tile_pos.x = newPos.x; 
+	tile_pos.y = newPos.y; 
+	draw_pos.x = tile_pos.x*TILE_WIDTH;
+	draw_pos.y = tile_pos.y*TILE_WIDTH;
+}

@@ -6,17 +6,20 @@ using json = nlohmann::json;
 
 #include "constants.hpp"
 #include "Dialogue.hpp"
+#include "Player.hpp"
+
 class Room {
 	private:
 		bool obstacles[NUM_TILES][NUM_TILES];
 		json objects;
-		sf::Texture rock_texture, dialogue_prompt_texture, bg_texture;
-		sf::Sprite rock_sprite, dialogue_prompt_sprite, bg_sprite;
+		sf::Texture rock_texture, teleporter_texture, dialogue_prompt_texture, bg_texture;
+		sf::Sprite rock_sprite, teleporter_sprite, dialogue_prompt_sprite, bg_sprite;
 		std::string roomName;
 	public:
 		void initialize(std::string);
 		void draw(sf::RenderWindow *window);
 		bool collidesWithObstacles(sf::Vector2i pos);
-		void handleObjectCollisions(sf::Vector2i pos, Dialogue *dialogue);
+		void handleObjectCollisions(Player *player, Dialogue *dialogue);
+		std::string getName();
 };
 #endif // ROOM
