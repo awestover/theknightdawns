@@ -20,5 +20,5 @@ const int FRAME_RATE = 60;
  * 	- 3rd row is up
  * 	- 4th row is down
  */
-enum DIRECTIONS { RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3 };
+enum DIRECTIONS { RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3, IDLE = 4, ATTACK_RIGHT = 5, ATTACK_LEFT = 6, ATTACK_UP = 7, ATTACK_DOWN = 8 };
 #endif // CONSTANTS

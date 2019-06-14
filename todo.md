@@ -1,4 +1,10 @@
 
+# the process for importing a new sprite sheet needs to be WAYYYY easier 
+
+# Handle different sized sprites
+-- not by making them werid sizes
+-- consider different modes: battle, quest
+
 #initialize is nasty, this should just happen when you create a new instance of the object FIGURE OUT HOW cpp objects work man
 # add inventory
 
