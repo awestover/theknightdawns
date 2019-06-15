@@ -10,7 +10,7 @@ class Dialogue{
 		sf::Text dialogueText, dialogueTitle, dialogueClose;
 		sf::Vertex dialogueBackdrop[4];
 	public:
-		void initialize();
+		Dialogue();
 		void updateText(std::string newText, std::string newTitle);
 		void draw(sf::RenderWindow *window);
 		void setDialogueViewViewport(sf::FloatRect viewport);

@@ -25,11 +25,10 @@ int main() {
 
 	sf::View mainView;
 	mainView.setSize(SCREEN_DIMENSIONS);
-	Dialogue dialogue;
-	dialogue.initialize();
-	scaleViews(&window, &mainView, &dialogue);
+	Dialogue *dialogue = new Dialogue();
+	scaleViews(&window, &mainView, dialogue);
 
-	std::ifstream roomFin("data/rooms.txt");
+	std::ifstream roomFin("data/rooms/rooms.txt");
 	int numRooms;
 	roomFin>>numRooms;
 	std::map<std::string, int> roomNameIdxs;
@@ -39,15 +38,14 @@ int main() {
 		roomNameIdxs.insert(std::pair<std::string, int>(tmp, i));
 	}
 
-	Room rooms[numRooms];
+	Room **rooms = (Room**)malloc(sizeof(Room)*numRooms);
 	for(std::map<std::string, int>::iterator itr = roomNameIdxs.begin(); itr != roomNameIdxs.end(); ++itr){
-		rooms[itr->second].initialize(itr->first);
+		rooms[itr->second] = new Room(itr->first);
 	}
 
 	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;
-	Player player;
-	player.initialize(rooms[0].getName());
+	Player player(rooms[0]->getName());
 
     while (window.isOpen()) {
         sf::Event event;
@@ -56,13 +54,13 @@ int main() {
 				window.close();
 			}
 			else if (event.type == sf::Event::Resized) {
-				scaleViews(&window, &mainView, &dialogue);
+				scaleViews(&window, &mainView, dialogue);
 			}
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Q)
 					window.close();
 				else if(event.key.code == sf::Keyboard::C)
-						dialogue.setOpenState(false);
+						dialogue->setOpenState(false);
 			}
 		}
 
@@ -83,7 +81,7 @@ int main() {
 					else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 						proposedPos.y += 1;
 				}
-				if(!rooms[roomNameIdxs[player.getCurRoom()]].collidesWithObstacles(proposedPos)){
+				if(!rooms[roomNameIdxs[player.getCurRoom()]]-> collidesWithObstacles(proposedPos)){
 					player.setPos(proposedPos.x, proposedPos.y);
 				}
 			}
@@ -95,12 +93,12 @@ int main() {
         window.clear(BLACK);
 		window.setView(mainView);
 
-		rooms[roomNameIdxs[player.getCurRoom()]].draw(&window);
-		rooms[roomNameIdxs[player.getCurRoom()]].handleObjectCollisions(&player, &dialogue);
+		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window);
+		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, dialogue);
 		player.draw(&window);
 
-		if(dialogue.isOpen()){
-			dialogue.draw(&window);
+		if(dialogue->isOpen()){
+			dialogue->draw(&window);
 		}
 
         window.display();

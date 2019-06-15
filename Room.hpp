@@ -16,9 +16,9 @@ class Room {
 		sf::Sprite rock_sprite, teleporter_sprite, dialogue_prompt_sprite, bg_sprite;
 		std::string roomName;
 	public:
-		void initialize(std::string);
+		Room(std::string roomName);
 		void draw(sf::RenderWindow *window);
-		bool collidesWithObstacles(sf::Vector2i pos);
+		bool collidesWithObstacles(sf::Vector2i tile_pos);
 		void handleObjectCollisions(Player *player, Dialogue *dialogue);
 		std::string getName();
 };

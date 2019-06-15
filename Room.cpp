@@ -7,7 +7,7 @@
 #include "utilityFunctions.hpp"
 #include "Room.hpp"
 
-void Room::initialize(std::string roomName){
+Room::Room (std::string roomName){
 	this->roomName = roomName;
 
 	// this should probably be room specific...
@@ -41,6 +41,40 @@ void Room::initialize(std::string roomName){
 
 }
 
+// void Room::initialize(std::string roomName){
+//     this->roomName = roomName;
+
+//     // this should probably be room specific...
+//     bg_texture.loadFromFile("data/imgs/tileMap.png");
+//     bg_sprite.setTexture(bg_texture);
+//     bg_sprite.setTextureRect(sf::IntRect(0, 0, WOLRD_DIMENSIONS.x, WOLRD_DIMENSIONS.y)); // seems sketchy....
+
+//     rock_texture.loadFromFile("data/imgs/rock.png");
+//     rock_sprite.setTexture(rock_texture);
+//     rock_sprite.setScale(TILE_WIDTH/(1.0*rock_sprite.getTextureRect().width), TILE_WIDTH/(1.0*rock_sprite.getTextureRect().height));
+
+//     teleporter_texture.loadFromFile("data/imgs/teleporter.png");
+//     teleporter_sprite.setTexture(teleporter_texture);
+//     teleporter_sprite.setScale(TILE_WIDTH/(1.0*teleporter_sprite.getTextureRect().width), TILE_WIDTH/(1.0*teleporter_sprite.getTextureRect().height));
+
+//     dialogue_prompt_texture.loadFromFile("data/imgs/dialoguePrompt.png");
+//     dialogue_prompt_sprite.setTexture(dialogue_prompt_texture);
+//     dialogue_prompt_sprite.setScale(TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().width), TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().height));
+
+//     std::ifstream obstacles_fin("data/rooms/"+roomName+"/obstacles.txt");
+//     for(int i = 0; i < NUM_TILES; i++){
+//         for(int j = 0; j < NUM_TILES; j++){
+//             char cur;
+//             obstacles_fin >> cur;
+//             obstacles[i][j] = (cur=='1');
+//         }
+//     }
+
+//     std::ifstream objects_fin("data/rooms/"+roomName+"/objects.json");
+//     objects_fin >> objects;
+
+// }
+
 void Room::draw(sf::RenderWindow *window){
 	window->draw(bg_sprite);
 
@@ -68,13 +102,11 @@ void Room::draw(sf::RenderWindow *window){
 	}
 }
 
-// Given: position of the top left corner of a rectangle with dimensions TILE_WIDTH by TILE_WIDTH
-// Returns true if the position overlaps with any obstacle tiles
-bool Room::collidesWithObstacles(sf::Vector2i pos){
+bool Room::collidesWithObstacles(sf::Vector2i tile_pos){
 	for(int i = 0; i < NUM_TILES; i++){
 		for(int j = 0; j < NUM_TILES; j++){
 			if(obstacles[i][j]){
-				if(pos.x == j && pos.y == i){
+				if(tile_pos.x == j && tile_pos.y == i){
 					return true;
 				}
 			}

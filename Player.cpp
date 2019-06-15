@@ -6,50 +6,54 @@
 #include "constants.hpp"
 #include "utilityFunctions.hpp"
 
-void Player::initialize(std::string roomName) {
+Player::Player(std::string roomName) {
+	visualDimensions.x = 84; visualDimensions.y = 84;
 	curRoom = roomName;
 	tile_pos.x = 1; tile_pos.y = 1;
 	draw_pos.x = tile_pos.x*TILE_WIDTH; draw_pos.y = tile_pos.y*TILE_WIDTH; 
-	texture.loadFromFile("data/imgs/turtle_sheet.png");
+	texture.loadFromFile("data/imgs/knight.png");
 	sprite.setTexture(texture);
-	sprite.setTextureRect(sf::IntRect(0,0,TILE_WIDTH,TILE_WIDTH));
+	sprite.setTextureRect(sf::IntRect(0,0,visualDimensions.x,visualDimensions.y));
 }
 
 void Player::draw(sf::RenderWindow *window) {
-	sprite.setPosition(draw_pos);
+	sprite.setPosition(draw_pos.x - (visualDimensions.x - TILE_WIDTH), draw_pos.y - (visualDimensions.y - TILE_WIDTH));
 
 	if(!positionsSynced()){
 		int dx = TILE_WIDTH*tile_pos.x - draw_pos.x;
 		int dy = TILE_WIDTH*tile_pos.y - draw_pos.y;
 		if(fabs(dx) > draw_catchup_speed*0.5f){
 			if(dx < 0){
-				facing = LEFT;
+				aniDirection = LEFT;
 				draw_pos.x -= draw_catchup_speed;
 			}
 			else { // dx > 0
-				facing = RIGHT;
+				aniDirection = RIGHT;
 				draw_pos.x += draw_catchup_speed;
 			}
 		}
 		else { // fabs(dy) > draw_catchup_speed*0.5f
 			if(dy < 0){
-				facing = UP;
+				aniDirection = UP;
 				draw_pos.y -= draw_catchup_speed;
 			}
 			else { // dy > 0
-				facing = DOWN;
+				aniDirection = DOWN;
 				draw_pos.y += draw_catchup_speed;
 			}
 		}
+	}
+	else {
+		aniDirection = IDLE;
 	}
 
 	aniCt += 1;
 	if(aniCt == aniTurnOverCt){
 		aniCt = 0;
-		aniState = (aniState + 1) % numAniStates;
+		aniFrame = (aniFrame + 1) % numAniFrames[aniDirection];
 	}
 
-	sprite.setTextureRect(sf::IntRect(TILE_WIDTH*aniState, facing*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
+	sprite.setTextureRect(sf::IntRect(aniFrame*visualDimensions.x, aniDirection*visualDimensions.y, visualDimensions.x, visualDimensions.y));
 	window->draw(sprite);
 }
 

@@ -5,7 +5,7 @@
 #include "Dialogue.hpp"
 #include "constants.hpp"
 
-void Dialogue::initialize(){
+Dialogue::Dialogue(){
 	dialogueView.setSize(DIALOGUE_DIMENSIONS);
 	dialogueView.setCenter(DIALOGUE_DIMENSIONS*0.5f);
 
