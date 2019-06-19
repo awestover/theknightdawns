@@ -95,13 +95,15 @@ bool Room::collidesWithObstacles(sf::Vector2i tile_pos){
 	return false;
 }
 
-void Room::handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud){
+void Room::handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud, std::map<std::string, sf::Texture> *faces){
 	for(json::iterator it = objects.begin(); it!=objects.end(); ++it){
 		sf::Vector2i tmp((*it)["pos"][0], (*it)["pos"][1]);
 		if(player->getTilePos() == tmp){
 			if((*it)["type"] == "dialogue"){
 				dialogue->setOpenState(true);
 				dialogue->updateText((*it)["body"]["description"], (*it)["body"]["title"]);
+				std::string imgName = (*it)["body"]["face"];
+				dialogue->setSpriteTexture(&faces->at(imgName));
 				player->updateQuestProgress((*it)["id"]);
 			}
 			else if((*it)["type"] == "teleporter"){

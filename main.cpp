@@ -13,6 +13,7 @@
 #include "constants.hpp"
 #include "utilityFunctions.hpp"
 #include "HUD.hpp"
+#include "BattleStats.hpp"
 
 void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
 	window->close();
@@ -42,6 +43,19 @@ int main(int argc, char** argv) {
 	sf::View mainView;
 	mainView.setSize(SCREEN_DIMENSIONS);
 
+	std::ifstream facesFin("data/faces.txt");
+	int numFaces;
+	facesFin>>numFaces;
+	std::map<std::string, sf::Texture> faces;
+	for (int i = 0; i < numFaces; i++) {
+		std::string faceName;
+		facesFin>>faceName;
+		sf::Texture faceSprite;
+		if(!faceSprite.loadFromFile("data/imgs/"+faceName))
+			std::cout << "error loading image "<< faceName << std::endl;
+		faces[faceName] = faceSprite;
+	}
+
 	std::ifstream roomFin("data/rooms/rooms.txt");
 	int numRooms;
 	roomFin>>numRooms;
@@ -49,16 +63,26 @@ int main(int argc, char** argv) {
 	for (int i = 0; i < numRooms; ++i) {
 		std::string tmp;
 		roomFin>>tmp;
-		roomNameIdxs.insert(std::pair<std::string, int>(tmp, i));
+		roomNameIdxs[tmp] = i;
 	}
 	Room **rooms = (Room**)malloc(sizeof(Room)*numRooms);
 	for(std::map<std::string, int>::iterator itr = roomNameIdxs.begin(); itr != roomNameIdxs.end(); ++itr)
 		rooms[itr->second] = new Room(itr->first);
 
 	Player player(rooms[0]->getName(), username);
+	BattleStats battleStats;
 	Dialogue dialogue;
+
+	// super temporrary solution, the character shown needs to be given in the objects.json file for the room
+	sf::Texture tmpFaceSprite;
+	if(!tmpFaceSprite.loadFromFile("data/imgs/dog.png"))
+		std::cout << "error loading image" << std::endl;
+	dialogue.setSpriteTexture(&tmpFaceSprite);
+	battleStats.setEnemyFaceTexture(&tmpFaceSprite);
+	battleStats.setPlayerFaceTexture(&tmpFaceSprite);
+
 	HUD hud(username, player.getCurrentQuest()); // tbh hud should be a private field of player....
-	scaleViews(&window, &mainView, &dialogue, &hud);
+	scaleViews(&window, &mainView, &dialogue, &hud, &battleStats);
 	hud.setRoom(player.getCurRoom());
 	if(player.questCompleted())
 		player.updateQuest();
@@ -73,13 +97,17 @@ int main(int argc, char** argv) {
 				shutdown(numRooms, &window, rooms);
 			}
 			else if (event.type == sf::Event::Resized) {
-				scaleViews(&window, &mainView, &dialogue, &hud);
+				scaleViews(&window, &mainView, &dialogue, &hud, &battleStats);
 			}
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Q)
 					shutdown(numRooms, &window, rooms);
 				else if(event.key.code == sf::Keyboard::C)
 					dialogue.setOpenState(false);
+				else if(event.key.code == sf::Keyboard::B) // for debugging ONLY
+					battleMode = true;
+				else if(event.key.code == sf::Keyboard::N) // for debugging ONLY
+					battleMode = false;
 			}
 		}
 
@@ -112,12 +140,17 @@ int main(int argc, char** argv) {
 		window.setView(mainView);
 
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window);
-		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud);
+		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
 		player.draw(&window);
 		hud.draw(&window);
 
-		if(dialogue.isOpen()){
-			dialogue.draw(&window);
+		if(battleMode){
+			battleStats.draw(&window);
+		}
+		else{ // normalMode
+			if(dialogue.isOpen()){
+				dialogue.draw(&window);
+			}
 		}
 
         window.display();

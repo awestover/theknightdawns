@@ -29,13 +29,13 @@ exampleObjectsjson = [
 	"pos": [18,15],
 	"type": "dialogue",
         "id": "d1",
-	"body": {"title": "quest, part 1", "description":"This is the first quest"}
+        "body": {"title": "quest, part 1", "description":"This is the first quest", "face":"crab.png"}
 },
 {
 	"pos": [15,10],
 	"type": "dialogue",
         "id":"d2",
-	"body": {"title": "quest, part 2", "description":"This is a follow up quest"}
+        "body": {"title": "quest, part 2", "description":"This is a follow up quest", "face":"dragon.png"}
 },
 {
 	"pos": [10,5],
