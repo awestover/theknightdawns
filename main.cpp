@@ -139,7 +139,7 @@ int main(int argc, char** argv) {
         window.clear(BLACK);
 		window.setView(mainView);
 
-		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window);
+		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
 		player.draw(&window);
 		hud.draw(&window);

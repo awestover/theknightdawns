@@ -28,7 +28,6 @@ Room::Room (std::string roomName){
 
 	dialogue_prompt_texture.loadFromFile("data/imgs/dialoguePrompt.png");
 	dialogue_prompt_sprite.setTexture(dialogue_prompt_texture);
-	dialogue_prompt_sprite.setScale(TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().width), TILE_WIDTH/(1.0*dialogue_prompt_sprite.getTextureRect().height));
 
 	std::ifstream obstacles_fin("data/rooms/"+roomName+"/obstacles.txt");
 	obstacles = (bool**)malloc(sizeof(bool*)*dimensions.y);
@@ -46,7 +45,7 @@ Room::Room (std::string roomName){
 
 }
 
-void Room::draw(sf::RenderWindow *window){
+void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *faces){
 	window->draw(bg_sprite);
 
 	for(int i = 0; i < dimensions.y; i++){
@@ -70,8 +69,12 @@ void Room::draw(sf::RenderWindow *window){
 		sf::Vector2f tmp((*it)["pos"][0], (*it)["pos"][1]);
 		tmp = tmp*(1.0f*TILE_WIDTH);
 		if((*it)["type"] == "dialogue"){
+			std::string imgName = (*it)["body"]["face"];
+			sf::Texture dialogueTextureTmp = faces->at(imgName); // NOTE: this might be very bad
+			dialogue_prompt_sprite.setTexture(dialogueTextureTmp);
 			dialogue_prompt_sprite.setPosition(tmp);
 			window->draw(dialogue_prompt_sprite);
+			
 		}
 		else if((*it)["type"] == "teleporter") {
 			tmp.x -= (teleporterDimensions.x-TILE_WIDTH)/2;

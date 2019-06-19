@@ -24,7 +24,7 @@ class Room {
 		int teleporterAniCt = 0;
 	public:
 		Room(std::string roomName);
-		void draw(sf::RenderWindow *window);
+		void draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *faces);
 		bool collidesWithObstacles(sf::Vector2i tile_pos);
 		void handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud, std::map<std::string, sf::Texture> *faces);
 		std::string getName();
