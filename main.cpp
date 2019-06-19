@@ -30,11 +30,11 @@ int main(int argc, char** argv) {
 	else {
 		username = "null";
 	}
-
+	bool battleMode = false; // 2 modes, battle mode and normal mode
 	bool fullScreen = false;
 	sf::RenderWindow window;
 	if(fullScreen)
-		window.create(sf::VideoMode(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH, 32), "RPG GAMMUUU!!", sf::Style::Fullscreen);
+		window.create(sf::VideoMode(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y, 32), "RPG GAMMUUU!!", sf::Style::Fullscreen);
 	else
 		window.create(sf::VideoMode(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y, 32), "RPG GAMMUUU!!");
 	window.setFramerateLimit(FRAME_RATE);
@@ -58,7 +58,6 @@ int main(int argc, char** argv) {
 	Player player(rooms[0]->getName(), username);
 	Dialogue dialogue;
 	HUD hud(username, player.getCurrentQuest()); // tbh hud should be a private field of player....
-	std::cout << player.getCurrentQuest() << std::endl;
 	scaleViews(&window, &mainView, &dialogue, &hud);
 	hud.setRoom(player.getCurRoom());
 	if(player.questCompleted())
@@ -107,9 +106,8 @@ int main(int argc, char** argv) {
 			}
 		}
 
-		updateCameraPos(&cameraPos, player.getDrawPos());
+		updateCameraPos(&cameraPos, player.getDrawPos(), rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
 		mainView.setCenter(cameraPos);
-
         window.clear(BLACK);
 		window.setView(mainView);
 
@@ -117,7 +115,6 @@ int main(int argc, char** argv) {
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud);
 		player.draw(&window);
 		hud.draw(&window);
-		hud.updateHealth(player.getHealth());  // I HATE THIE A LOT please fix this (problems: calling this way too many times and a bunch of other problems too)
 
 		if(dialogue.isOpen()){
 			dialogue.draw(&window);

@@ -16,27 +16,19 @@ float maxt(float x, float y){
 	return x < y ? y : x;
 }
 
-void updateCameraPos(sf::Vector2f *cameraPos, sf::Vector2f userPos){
+void updateCameraPos(sf::Vector2f *cameraPos, sf::Vector2f userPos, sf::Vector2i roomDimensions){
 	cameraPos->x = userPos.x + TILE_WIDTH/2;
 	if (cameraPos->x < SCREEN_DIMENSIONS.x/2)
 		cameraPos->x = SCREEN_DIMENSIONS.x/2;
-	if (cameraPos->x > WOLRD_DIMENSIONS.x - SCREEN_DIMENSIONS.x/2)
-		cameraPos->x = WOLRD_DIMENSIONS.x - SCREEN_DIMENSIONS.x/2;
+	if (cameraPos->x > roomDimensions.x*TILE_WIDTH - SCREEN_DIMENSIONS.x/2)
+		cameraPos->x = roomDimensions.x*TILE_WIDTH - SCREEN_DIMENSIONS.x/2;
 
 	cameraPos->y = userPos.y + TILE_WIDTH/2;
 	if (cameraPos->y < SCREEN_DIMENSIONS.y/2)
 		cameraPos->y = SCREEN_DIMENSIONS.y/2;
-	if (cameraPos->y > WOLRD_DIMENSIONS.y - SCREEN_DIMENSIONS.y/2)
-		cameraPos->y = WOLRD_DIMENSIONS.y - SCREEN_DIMENSIONS.y/2;
+	if (cameraPos->y > roomDimensions.y*TILE_WIDTH - SCREEN_DIMENSIONS.y/2)
+		cameraPos->y = roomDimensions.y*TILE_WIDTH - SCREEN_DIMENSIONS.y/2;
 }
-
-// template <typename T>
-// sf::Rect<T>
-// bool tileHitsTile(sf::Vector2f posA, sf::Vector2f posB){
-//     bool xIn = mint(posA.x + TILE_WIDTH, posB.x + TILE_WIDTH) > maxt(posA.x, posB.x);
-//     bool yIn = mint(posA.y + TILE_WIDTH, posB.y + TILE_WIDTH) > maxt(posA.y, posB.y);
-//     return xIn && yIn;
-// }
 
 void scaleViews(sf::RenderWindow *window, sf::View *mainView, Dialogue *dialogue, HUD *hud){
 	float ratioX = window->getSize().x/SCREEN_DIMENSIONS.x;

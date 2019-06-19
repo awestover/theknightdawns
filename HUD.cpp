@@ -13,22 +13,14 @@ HUD::HUD(std::string username, std::string quest) {
 		std::cout<<"ERROR loading arial font"<<std::endl;
 
 	bg[0] = sf::Vertex(sf::Vector2f(0, 0), sf::Color(57,74,102,150));
-	bg[1] = sf::Vertex(sf::Vector2f(0, DIALOGUE_DIMENSIONS.y), sf::Color(73,104,155,150));
-	bg[2] = sf::Vertex(sf::Vector2f(DIALOGUE_DIMENSIONS.x, DIALOGUE_DIMENSIONS.y), sf::Color(54,107,193,150));
-	bg[3] = sf::Vertex(sf::Vector2f(DIALOGUE_DIMENSIONS.x, 0), sf::Color(17,95,221,150));
+	bg[1] = sf::Vertex(sf::Vector2f(0, HUD_DIMENSIONS.y), sf::Color(73,104,155,150));
+	bg[2] = sf::Vertex(sf::Vector2f(HUD_DIMENSIONS.x, HUD_DIMENSIONS.y), sf::Color(54,107,193,150));
+	bg[3] = sf::Vertex(sf::Vector2f(HUD_DIMENSIONS.x, 0), sf::Color(17,95,221,150));
 
-	// i wish this where a vector of texts
-	initializeText(&healthText, TEXT_PADDING*4, TEXT_PADDING*1, "Health: 10");
-	initializeText(&usernameText, TEXT_PADDING*4, TEXT_PADDING*1.05+TEXT_SIZE, "Username: "+username);
-	initializeText(&roomText, TEXT_PADDING*4, TEXT_PADDING*1.10+TEXT_SIZE*2, "Room: null");
-	initializeText(&questText, TEXT_PADDING*4, TEXT_PADDING*1.15+TEXT_SIZE*3, "Quest: "+quest);
-	std::cout <<"Quest: "+quest  << std::endl;
-}
-
-void HUD::updateHealth(int health){
-	std::string tmpA("Health: ");
-	std::string tmp = tmpA+std::to_string(health); 
-	healthText.setString(tmp);
+	initializeText(&roomText, TEXT_PADDING, TEXT_PADDING, "Room: null");
+	initializeText(&questText, HUD_DIMENSIONS.x/2-TEXT_PADDING*6, TEXT_PADDING, "Quest: "+quest);
+	initializeText(&usernameText, 0, 0, "Username: "+username); // fake positions
+	usernameText.setPosition(HUD_DIMENSIONS.x - usernameText.getLocalBounds().width-TEXT_PADDING*4, TEXT_PADDING);
 }
 
 void HUD::setRoom(std::string room){
@@ -40,7 +32,6 @@ void HUD::setRoom(std::string room){
 void HUD::draw(sf::RenderWindow *window){
 	window->setView(hudView);
 	window->draw(bg, 4, sf::Quads);
-	window->draw(healthText);
 	window->draw(usernameText);
 	window->draw(roomText);
 	window->draw(questText);

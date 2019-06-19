@@ -1,6 +1,7 @@
 
 import sys
 import os
+import json
 
 num_tiles = 32
 newRoom = ""
@@ -43,12 +44,15 @@ exampleObjectsjson = [
 	"body": {"newRoom": "startRoom", "newPos": [20,20]}
 }
 ]
-os.system("echo {} >> {}/objects.json".format(str(exampleObjectsjson), newRoom))
+with open("{}/objects.json".format(newRoom), 'w') as f:
+    json.dump(exampleObjectsjson, f, indent=4)
 
 exampleObstacles = "1"*num_tiles + "\n" + ("1"+"0"*(num_tiles-2)+"1\n")*(num_tiles-2) + "1"*num_tiles 
 os.system("echo \"{}\" >> {}/obstacles.txt".format(str(exampleObstacles), newRoom))
 
 exampleDimensions = "{} {}".format(num_tiles, num_tiles); # tiles
 os.system("echo {} >> {}/dimensions.txt".format(exampleDimensions, newRoom))
+
+os.system("cp startRoom/bg.png {}/bg.png".format(newRoom))
 
 

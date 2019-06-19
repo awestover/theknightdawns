@@ -7,12 +7,11 @@ class HUD{
 		const int TEXT_SIZE = 20;
 		sf::View hudView;
 		sf::Font font;
-		sf::Text healthText, usernameText, roomText, questText;
+		sf::Text usernameText, roomText, questText;
 		sf::Vertex bg[4];
 	public:
 		HUD(std::string username, std::string quest);
 		void setRoom(std::string room);
-		void updateHealth(int health);
 		void draw(sf::RenderWindow *window);
 		void setViewport(sf::FloatRect viewport);
 		void setQuest(std::string title);

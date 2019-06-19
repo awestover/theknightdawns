@@ -41,11 +41,6 @@ an amazing game
 ***************************************************************************************************
 ####TODO
 
-## start quest system
-  - record quests in users
-  - first need to send username to main.cpp
-    -- and probably render it
-
 ## battle mode
     -- lots of stuff todo
     -- first of all what stats should they even have
@@ -63,12 +58,13 @@ an amazing game
 
   -- Handle different sized sprites
     -- not by making them werid sizes!! - my beautiful art :(
-    -- consider different modes: battle, quest
+    -- centering is kinda hacky too though: stuff falls over the edge of tiles...
 
 # add inventory
 
 ### make sure we aren't rendering stuff off screen!!
   - eh Cpp is fast, this isn't really a priority atm since worlds are at most like 16 (?) times the size of the view
+  -- but later: "sure why not"
 
 ***************************************************************************************************
 ***************************************************************************************************

@@ -11,16 +11,23 @@ using json = nlohmann::json;
 
 class Room {
 	private:
-		bool obstacles[NUM_TILES][NUM_TILES];
+		std::string roomName;
+		sf::Vector2i dimensions;
+		bool **obstacles;
 		json objects;
 		sf::Texture rock_texture, teleporter_texture, dialogue_prompt_texture, bg_texture;
 		sf::Sprite rock_sprite, teleporter_sprite, dialogue_prompt_sprite, bg_sprite;
-		std::string roomName;
+		sf::Vector2i teleporterDimensions;
+		const int teleporterNumAniFrames = 61;
+		int teleporterAniFrame = 0;
+		const int teleporterAniTurnOverCt = 10; // how many counts of aniCt to stay on a single frame 
+		int teleporterAniCt = 0;
 	public:
 		Room(std::string roomName);
 		void draw(sf::RenderWindow *window);
 		bool collidesWithObstacles(sf::Vector2i tile_pos);
 		void handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud);
 		std::string getName();
+		sf::Vector2i getDimensions();
 };
 #endif // ROOM_H

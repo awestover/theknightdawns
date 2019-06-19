@@ -16,5 +16,11 @@
 	"type": "teleporter",
 	"id":"t1",
 	"body": {"newRoom": "nextRoom", "newPos": [1,1]}
+},
+{
+	"pos": [5, 1],
+	"type": "teleporter",
+	"id":"t2",
+	"body": {"newRoom": "battleRoom", "newPos": [1,1]}
 }
 ]
