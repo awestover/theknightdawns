@@ -1,0 +1,5 @@
+[
+	{"name":"null", "requirements":[], "rewards":{"health": 0}},
+	{"name": "init", "requirements": [{"type":"dialogue", "room":"startRoom", "id":"d1"}], "rewards":{"health": 10}},
+	{"name": "end", "requirements": [{"type":"guardian", "room":"startRoom", "id":"null"}], "rewards":{"health": 0}}
+]

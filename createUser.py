@@ -17,15 +17,12 @@ hashedPassword = hashlib.sha256(salt.encode() + password.strip().encode()).hexdi
 
 data = {
     "passwordHash": hashedPassword,
+    "currentQuest":"null",
+    "questProgress":[],
     "baseStats":{
-
+        "health": 5
     },
-    "questsCompleted":{
-
-    },
-    "inventory": {
-
-    }
+    "inventory": []
 }
 
 # check that the username is valid (not duplicate) in the bash script before calling this!!!

@@ -1,11 +1,12 @@
-#ifndef ROOM
-#define ROOM
+#ifndef ROOM_H
+#define ROOM_H
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 #include <string>
 
 #include "constants.hpp"
 #include "Dialogue.hpp"
+#include "HUD.hpp"
 #include "Player.hpp"
 
 class Room {
@@ -19,7 +20,7 @@ class Room {
 		Room(std::string roomName);
 		void draw(sf::RenderWindow *window);
 		bool collidesWithObstacles(sf::Vector2i tile_pos);
-		void handleObjectCollisions(Player *player, Dialogue *dialogue);
+		void handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud);
 		std::string getName();
 };
-#endif // ROOM
+#endif // ROOM_H

@@ -29,7 +29,7 @@ for (( i = 0; i < $totalTries; i++ )); do
 		printf "Welcome back $username \n"
 		printf "Starting the game\n"
 		make
-		./main
+		./main $username
 		break;
 	fi
 done

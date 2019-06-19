@@ -9,24 +9,12 @@ Dialogue::Dialogue(){
 	dialogueView.setSize(DIALOGUE_DIMENSIONS);
 	dialogueView.setCenter(DIALOGUE_DIMENSIONS*0.5f);
 
-	if(!font.loadFromFile("data/arial.ttf")){
+	if(!font.loadFromFile("data/arial.ttf"))
 		std::cout<<"ERROR loading arial font"<<std::endl;
-	}
 
-	dialogueText.setFont(font);
-	dialogueText.setCharacterSize(TEXT_SIZE);
-	dialogueText.setFillColor(sf::Color::Black);
-	dialogueText.setPosition(TEXT_PADDING, TEXT_PADDING*2+TEXT_SIZE); 
-
-	dialogueTitle.setFont(font);
-	dialogueTitle.setCharacterSize(TEXT_SIZE);
-	dialogueTitle.setFillColor(sf::Color::Black);
-	dialogueTitle.setPosition(TEXT_PADDING, TEXT_PADDING); 
-
-	dialogueClose.setFont(font);
-	dialogueClose.setCharacterSize(TEXT_SIZE);
-	dialogueClose.setFillColor(sf::Color::Black);
-	dialogueClose.setString("Press 'c' to close dialogue box");
+	initializeText(&dialogueTitle, TEXT_PADDING, TEXT_PADDING, "null");
+	initializeText(&dialogueText, TEXT_PADDING, TEXT_PADDING*2+TEXT_SIZE, "null");
+	initializeText(&dialogueClose, 0, 0, "Press 'c' to close dialogue box"); // note: this position is fake, I set real position based on size of the text, in the next line
 	dialogueClose.setPosition(DIALOGUE_DIMENSIONS.x-dialogueClose.getLocalBounds().width-TEXT_PADDING, DIALOGUE_DIMENSIONS.y-dialogueClose.getLocalBounds().height-TEXT_PADDING); 
 
 	dialogueBackdrop[0] = sf::Vertex(sf::Vector2f(0, 0), sf::Color(57,74,102,150));
@@ -59,5 +47,13 @@ void Dialogue::setOpenState(bool isOpen){
 
 bool Dialogue::isOpen(){
 	return dialogueOpen;
+}
+
+void Dialogue::initializeText(sf::Text *text, float x, float y, std::string initString){
+	text->setFont(font);
+	text->setCharacterSize(TEXT_SIZE);
+	text->setFillColor(sf::Color::Black);
+	text->setPosition(x, y); 
+	text->setString(initString);
 }
 

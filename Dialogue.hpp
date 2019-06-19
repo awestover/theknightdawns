@@ -1,5 +1,6 @@
-#ifndef DIALOGUE
-#define DIALOGUE
+#ifndef DIALOGUE_H
+#define DIALOGUE_H
+#include <SFML/Graphics.hpp>
 class Dialogue{
 	private:
 		const float TEXT_PADDING = 10.0f;
@@ -9,6 +10,7 @@ class Dialogue{
 		sf::Font font;
 		sf::Text dialogueText, dialogueTitle, dialogueClose;
 		sf::Vertex dialogueBackdrop[4];
+		void initializeText(sf::Text *text, float x, float y, std::string initString);
 	public:
 		Dialogue();
 		void updateText(std::string newText, std::string newTitle);
@@ -17,4 +19,4 @@ class Dialogue{
 		void setOpenState(bool isOpen);
 		bool isOpen();
 };
-#endif // DIALOGUE
+#endif // DIALOGUE_H

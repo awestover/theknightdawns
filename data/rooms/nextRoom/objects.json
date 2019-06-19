@@ -2,17 +2,20 @@
 {
 	"pos": [18,15],
 	"type": "dialogue",
+	"id": "d1",
 	"body": {"title": "quest, part 1", "description":"This is the first quest"}
 },
 {
 	"pos": [15,10],
 	"type": "dialogue",
+	"id":"d2",
 	"body": {"title": "quest, part 2", "description":"This is a follow up quest"}
 },
 
 {
 	"pos": [10,5],
 	"type": "teleporter",
+	"id": "t1",
 	"body": {"newRoom": "startRoom", "newPos": [20,20]}
 }
 ]

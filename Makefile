@@ -1,7 +1,6 @@
-objects=main.o Dialogue.o Room.o utilityFunctions.o Player.o
+objects=main.o Dialogue.o Room.o utilityFunctions.o Player.o HUD.o
 main: $(objects)
 	g++ -std=c++11 $(objects) -o main -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
-	./main
 main.o: main.cpp constants.hpp 
 	g++ -std=c++11 -c main.cpp
 Player.o: Player.cpp Player.hpp constants.hpp
@@ -12,6 +11,8 @@ Room.o: Room.cpp Room.hpp
 	g++ -std=c++11 -c Room.cpp
 utilityFunctions.o: utilityFunctions.hpp utilityFunctions.cpp
 	g++ -std=c++11 -c utilityFunctions.cpp
+HUD.o: HUD.hpp HUD.cpp constants.hpp
+	g++ -std=c++11 -c HUD.cpp
 clean:
 	rm -f main
 	rm -f *.o

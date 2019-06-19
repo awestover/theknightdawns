@@ -23,6 +23,19 @@ an amazing game
 
   -- moral of the story: views are the only thing that need a center
 
+## object instantiation
+  saying 
+  Player test;
+  would run the initialization code for player (if it required no arguments);
+
+### header gaurd files
+  `#define HUD` will destroy
+  `class HUD{}`
+  because they have the same name!!!
+
+  instead do 
+  `#define HUD_H`
+
 ***************************************************************************************************
 ***************************************************************************************************
 ***************************************************************************************************
@@ -34,16 +47,25 @@ an amazing game
     -- and probably render it
 
 ## battle mode
+    -- lots of stuff todo
+    -- first of all what stats should they even have
+    -- how does inventory play into it?
+    -- i think questing should level up character base health etc
+    -- in fight some actions could be
+        -- summon minions
+            -- chalkling circle
+        -- shoot / cast magic spell
+        -- build defenses
+        -- go up and hit with sword
 
-# the process for importing a new sprite sheet needs to be WAYYYY easier 
+## fix up problems with sprites
+  -- the process for importing a new sprite sheet needs to be WAYYYY easier 
 
-# Handle different sized sprites
-  -- not by making them werid sizes
-  -- consider different modes: battle, quest
+  -- Handle different sized sprites
+    -- not by making them werid sizes!! - my beautiful art :(
+    -- consider different modes: battle, quest
 
 # add inventory
-
-# improve graphics
 
 ### make sure we aren't rendering stuff off screen!!
   - eh Cpp is fast, this isn't really a priority atm since worlds are at most like 16 (?) times the size of the view

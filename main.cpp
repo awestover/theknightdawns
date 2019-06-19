@@ -12,10 +12,26 @@
 #include "Dialogue.hpp"
 #include "constants.hpp"
 #include "utilityFunctions.hpp"
+#include "HUD.hpp"
 
-int main() {
+void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
+	window->close();
+	for (int i = 0; i < numRooms; ++i) {
+		free(rooms[i]);
+	}
+	free(rooms);
+}
+
+int main(int argc, char** argv) {
+	std::string username;
+	if (argc == 2){
+		username = argv[1];
+	}
+	else {
+		username = "null";
+	}
+
 	bool fullScreen = false;
-
 	sf::RenderWindow window;
 	if(fullScreen)
 		window.create(sf::VideoMode(NUM_TILES*TILE_WIDTH, NUM_TILES*TILE_WIDTH, 32), "RPG GAMMUUU!!", sf::Style::Fullscreen);
@@ -25,8 +41,6 @@ int main() {
 
 	sf::View mainView;
 	mainView.setSize(SCREEN_DIMENSIONS);
-	Dialogue *dialogue = new Dialogue();
-	scaleViews(&window, &mainView, dialogue);
 
 	std::ifstream roomFin("data/rooms/rooms.txt");
 	int numRooms;
@@ -37,30 +51,36 @@ int main() {
 		roomFin>>tmp;
 		roomNameIdxs.insert(std::pair<std::string, int>(tmp, i));
 	}
-
 	Room **rooms = (Room**)malloc(sizeof(Room)*numRooms);
-	for(std::map<std::string, int>::iterator itr = roomNameIdxs.begin(); itr != roomNameIdxs.end(); ++itr){
+	for(std::map<std::string, int>::iterator itr = roomNameIdxs.begin(); itr != roomNameIdxs.end(); ++itr)
 		rooms[itr->second] = new Room(itr->first);
-	}
+
+	Player player(rooms[0]->getName(), username);
+	Dialogue dialogue;
+	HUD hud(username, player.getCurrentQuest()); // tbh hud should be a private field of player....
+	std::cout << player.getCurrentQuest() << std::endl;
+	scaleViews(&window, &mainView, &dialogue, &hud);
+	hud.setRoom(player.getCurRoom());
+	if(player.questCompleted())
+		player.updateQuest();
 
 	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;
-	Player player(rooms[0]->getName());
 
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
-				window.close();
+				shutdown(numRooms, &window, rooms);
 			}
 			else if (event.type == sf::Event::Resized) {
-				scaleViews(&window, &mainView, dialogue);
+				scaleViews(&window, &mainView, &dialogue, &hud);
 			}
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Q)
-					window.close();
+					shutdown(numRooms, &window, rooms);
 				else if(event.key.code == sf::Keyboard::C)
-						dialogue->setOpenState(false);
+					dialogue.setOpenState(false);
 			}
 		}
 
@@ -94,11 +114,13 @@ int main() {
 		window.setView(mainView);
 
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window);
-		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, dialogue);
+		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud);
 		player.draw(&window);
+		hud.draw(&window);
+		hud.updateHealth(player.getHealth());  // I HATE THIE A LOT please fix this (problems: calling this way too many times and a bunch of other problems too)
 
-		if(dialogue->isOpen()){
-			dialogue->draw(&window);
+		if(dialogue.isOpen()){
+			dialogue.draw(&window);
 		}
 
         window.display();
