@@ -13,7 +13,6 @@ Room::Room (std::string roomName){
 	std::ifstream dimensions_fin("data/rooms/"+roomName+"/dimensions.txt");
 	dimensions_fin >> dimensions.x;
 	dimensions_fin >> dimensions.y;
-	std::cout << dimensions.x <<" "<<dimensions.y << std::endl;
 
 	bg_texture.loadFromFile("data/rooms/"+roomName+"/bg.png");
 	bg_sprite.setTexture(bg_texture);

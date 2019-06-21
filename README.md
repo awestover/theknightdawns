@@ -41,6 +41,11 @@ an amazing game
 ***************************************************************************************************
 ####TODO
 
+## fix scary pointer not getting freed error!!!
+"main(93672,0x10a4e85c0) malloc: *** error for object 0x3f800000: pointer being freed was not allocated
+main(93672,0x10a4e85c0) malloc: *** set a breakpoint in malloc_error_break to debug
+[1]    93672 abort      ./main"
+
 ## battle mode
     -- lots of stuff todo
     -- first of all what stats should they even have

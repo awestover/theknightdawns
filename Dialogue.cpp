@@ -6,16 +6,19 @@
 #include "constants.hpp"
 
 Dialogue::Dialogue(){
-	dialogueView.setSize(DIALOGUE_DIMENSIONS);
-	dialogueView.setCenter(DIALOGUE_DIMENSIONS*0.5f);
+	view.setSize(DIALOGUE_DIMENSIONS);
+	view.setCenter(DIALOGUE_DIMENSIONS*0.5f);
 
 	if(!font.loadFromFile("data/arial.ttf"))
 		std::cout<<"ERROR loading arial font"<<std::endl;
 
-	initializeText(&dialogueTitle, TEXT_PADDING+DIALOGUE_DIMENSIONS.y, TEXT_PADDING, "null");
-	initializeText(&dialogueText, TEXT_PADDING+DIALOGUE_DIMENSIONS.y, TEXT_PADDING*2+TEXT_SIZE, "null");
-	initializeText(&dialogueClose, 0, 0, "Press 'c' to close dialogue box"); // note: this position is fake, I set real position based on size of the text, in the next line
-	dialogueClose.setPosition(DIALOGUE_DIMENSIONS.x-dialogueClose.getLocalBounds().width-TEXT_PADDING, DIALOGUE_DIMENSIONS.y-dialogueClose.getLocalBounds().height-TEXT_PADDING); 
+	texts["dialogueTitle"] = new sf::Text;
+	texts["dialogueText"] = new sf::Text;
+	texts["dialogueClose"] = new sf::Text;
+	initializeText(texts["dialogueTitle"], TEXT_PADDING+DIALOGUE_DIMENSIONS.y, TEXT_PADDING, "null");
+	initializeText(texts["dialogueText"], TEXT_PADDING+DIALOGUE_DIMENSIONS.y, TEXT_PADDING*2+TEXT_SIZE, "null");
+	initializeText(texts["dialogueClose"], 0, 0, "Press 'c' to close dialogue box"); // note: this position is fake, I set real position based on size of the text, in the next line
+	texts["dialogueClose"]->setPosition(DIALOGUE_DIMENSIONS.x-texts["dialogueClose"]->getLocalBounds().width-TEXT_PADDING, DIALOGUE_DIMENSIONS.y-texts["dialogueClose"]->getLocalBounds().height-TEXT_PADDING); 
 
 	dialogueBackdrop[0] = sf::Vertex(sf::Vector2f(0, 0), sf::Color(57,74,102,150));
 	dialogueBackdrop[1] = sf::Vertex(sf::Vector2f(0, DIALOGUE_DIMENSIONS.y), sf::Color(73,104,155,150));
@@ -25,21 +28,17 @@ Dialogue::Dialogue(){
 }
 
 void Dialogue::updateText(std::string newText, std::string newTitle){
-	dialogueText.setString(newText);
-	dialogueTitle.setString(newTitle);
+	texts["dialogueText"]->setString(newText);
+	texts["dialogueTitle"]->setString(newTitle);
 }
 
 void Dialogue::draw(sf::RenderWindow *window){
-	window->setView(dialogueView);
+	window->setView(view);
 	window->draw(dialogueBackdrop, 4, sf::Quads);
 	window->draw(faceSprite);
-	window->draw(dialogueTitle);
-	window->draw(dialogueText);
-	window->draw(dialogueClose);
-}
-
-void Dialogue::setDialogueViewViewport(sf::FloatRect viewport){
-	dialogueView.setViewport(viewport);
+	for(std::map<std::string, sf::Text*>::iterator it = texts.begin(); it != texts.end(); it++){
+		window->draw(*(it->second));
+	}
 }
 
 void Dialogue::setOpenState(bool isOpen){
@@ -48,14 +47,6 @@ void Dialogue::setOpenState(bool isOpen){
 
 bool Dialogue::isOpen(){
 	return dialogueOpen;
-}
-
-void Dialogue::initializeText(sf::Text *text, float x, float y, std::string initString){
-	text->setFont(font);
-	text->setCharacterSize(TEXT_SIZE);
-	text->setFillColor(sf::Color::Black);
-	text->setPosition(x, y); 
-	text->setString(initString);
 }
 
 void Dialogue::setSpriteTexture(sf::Texture *texture){

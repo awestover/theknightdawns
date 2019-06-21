@@ -1,4 +1,4 @@
-objects=main.o Dialogue.o Room.o utilityFunctions.o Player.o HUD.o BattleStats.o
+objects=main.o Dialogue.o Room.o utilityFunctions.o Player.o HUD.o BattleStats.o Entity.o Enemy.o TextDisplay.o
 main: $(objects)
 	g++ -std=c++11 $(objects) -o main -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 main.o: main.cpp constants.hpp 
@@ -15,6 +15,12 @@ HUD.o: HUD.hpp HUD.cpp constants.hpp
 	g++ -std=c++11 -c HUD.cpp
 BattleStats.o: BattleStats.hpp BattleStats.cpp constants.hpp
 	g++ -std=c++11 -c BattleStats.cpp
+Entity.o: Entity.hpp Entity.cpp
+	g++ -std=c++11 -c Entity.cpp
+Enemy.o: Enemy.hpp Enemy.cpp
+	g++ -std=c++11 -c Enemy.cpp
+TextDisplay.o: TextDisplay.hpp TextDisplay.cpp
+	g++ -std=c++11 -c TextDisplay.cpp
 clean:
 	rm -f main
 	rm -f *.o

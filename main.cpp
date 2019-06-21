@@ -1,5 +1,6 @@
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <iterator>
 #include <stdio.h>
@@ -14,6 +15,7 @@
 #include "utilityFunctions.hpp"
 #include "HUD.hpp"
 #include "BattleStats.hpp"
+#include "Enemy.hpp"
 
 void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
 	window->close();
@@ -70,6 +72,7 @@ int main(int argc, char** argv) {
 		rooms[itr->second] = new Room(itr->first);
 
 	Player player(rooms[0]->getName(), username);
+	Enemy testEnemy;
 	BattleStats battleStats;
 	Dialogue dialogue;
 
@@ -89,6 +92,15 @@ int main(int argc, char** argv) {
 
 	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;
+
+	bool playSound = false;
+	if (playSound){
+		sf::Music music;
+		music.openFromFile("data/song.ogg");
+		music.play();
+		music.setLoop(true);
+	}
+
 
     while (window.isOpen()) {
         sf::Event event;

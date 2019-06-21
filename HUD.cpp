@@ -6,8 +6,8 @@
 #include "utilityFunctions.hpp"
 
 HUD::HUD(std::string username, std::string quest) {
-	hudView.setSize(HUD_DIMENSIONS);
-	hudView.setCenter(HUD_DIMENSIONS*0.5f);
+	view.setSize(HUD_DIMENSIONS);
+	view.setCenter(HUD_DIMENSIONS*0.5f);
 
 	if(!font.loadFromFile("data/arial.ttf"))
 		std::cout<<"ERROR loading arial font"<<std::endl;
@@ -17,39 +17,30 @@ HUD::HUD(std::string username, std::string quest) {
 	bg[2] = sf::Vertex(sf::Vector2f(HUD_DIMENSIONS.x, HUD_DIMENSIONS.y), sf::Color(54,107,193,150));
 	bg[3] = sf::Vertex(sf::Vector2f(HUD_DIMENSIONS.x, 0), sf::Color(17,95,221,150));
 
-	initializeText(&roomText, TEXT_PADDING, TEXT_PADDING, "Room: null");
-	initializeText(&questText, HUD_DIMENSIONS.x/2-TEXT_PADDING*6, TEXT_PADDING, "Quest: "+quest);
-	initializeText(&usernameText, 0, 0, "Username: "+username); // fake positions
-	usernameText.setPosition(HUD_DIMENSIONS.x - usernameText.getLocalBounds().width-TEXT_PADDING*4, TEXT_PADDING);
+	texts["roomText"] = new sf::Text;
+	texts["questText"] = new sf::Text;
+	texts["usernameText"] = new sf::Text;
+	initializeText(texts["roomText"], TEXT_PADDING, TEXT_PADDING, "Room: null");
+	initializeText(texts["questText"], HUD_DIMENSIONS.x/2-TEXT_PADDING*6, TEXT_PADDING, "Quest: "+quest);
+	initializeText(texts["usernameText"], 0, 0, "Username: "+username); // fake positions
+	texts["usernameText"]->setPosition(HUD_DIMENSIONS.x - texts["usernameText"]->getLocalBounds().width-TEXT_PADDING*4, TEXT_PADDING);
 }
 
 void HUD::setRoom(std::string room){
 	std::string tmpA("Room: ");
 	std::string tmp = tmpA+room; 
-	roomText.setString(tmp);
+	texts["roomText"]->setString(tmp);
 }
 
 void HUD::draw(sf::RenderWindow *window){
-	window->setView(hudView);
+	window->setView(view);
 	window->draw(bg, 4, sf::Quads);
-	window->draw(usernameText);
-	window->draw(roomText);
-	window->draw(questText);
-}
-
-void HUD::setViewport(sf::FloatRect viewport){
-	hudView.setViewport(viewport);
+	for(std::map<std::string, sf::Text*>::iterator it = texts.begin(); it != texts.end(); it++){
+		window->draw(*(it->second));
+	}
 }
 
 void HUD::setQuest(std::string title){
-	questText.setString(title);
-}
-
-void HUD::initializeText(sf::Text *text, float x, float y, std::string initString){
-	text->setFont(font);
-	text->setCharacterSize(TEXT_SIZE);
-	text->setFillColor(sf::Color::Black);
-	text->setPosition(x, y); 
-	text->setString(initString);
+	texts["questText"]->setString(title);
 }
 
