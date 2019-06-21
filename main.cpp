@@ -18,11 +18,13 @@
 #include "Enemy.hpp"
 
 void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
+	std::cout << "shutting down" << std::endl;
 	window->close();
 	for (int i = 0; i < numRooms; ++i) {
 		free(rooms[i]);
 	}
 	free(rooms);
+	std::cout << "done shutting down" << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -107,13 +109,16 @@ int main(int argc, char** argv) {
         while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				shutdown(numRooms, &window, rooms);
+				return 0;
 			}
 			else if (event.type == sf::Event::Resized) {
 				scaleViews(&window, &mainView, &dialogue, &hud, &battleStats);
 			}
 			else if (event.type == sf::Event::KeyPressed) {
-				if (event.key.code == sf::Keyboard::Q)
+				if (event.key.code == sf::Keyboard::Q){
 					shutdown(numRooms, &window, rooms);
+					return 0;
+				}
 				else if(event.key.code == sf::Keyboard::C)
 					dialogue.setOpenState(false);
 				else if(event.key.code == sf::Keyboard::B) // for debugging ONLY
