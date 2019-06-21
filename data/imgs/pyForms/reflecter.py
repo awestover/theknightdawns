@@ -12,18 +12,18 @@ else:
 
 img = Image.open(name)
 width, height = img.size
+print(width, height)
 individual_width = width//num_frames
 img_parts = []
 for i in range(num_frames):
     img_parts.append(img.crop((i*individual_width, 0, (i+1)*individual_width, height)))
 
-new_im = Image.new('RGBA', (width, height*4))
+new_im = Image.new('RGBA', (width, height*2))
 
 new_im.paste(img, (0,0))
-new_im.paste(img.rotate(180), (0,height))
 for i in range(num_frames):
-    new_im.paste(img_parts[i].rotate(90), (i*individual_width, 2*height))
-    new_im.paste(img_parts[i].rotate(270), (i*individual_width, 3*height))
+    tmpImg = img_parts[i].transpose(Image.FLIP_LEFT_RIGHT)
+    new_im.paste(tmpImg, (i*individual_width, height))
 
 new_im.save(name.replace(".", "_sheet."))
 

@@ -18,13 +18,11 @@
 #include "Enemy.hpp"
 
 void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
-	std::cout << "shutting down" << std::endl;
 	window->close();
 	for (int i = 0; i < numRooms; ++i) {
 		free(rooms[i]);
 	}
 	free(rooms);
-	std::cout << "done shutting down" << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -159,6 +157,7 @@ int main(int argc, char** argv) {
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
 		player.draw(&window);
+		testEnemy.draw(&window);
 		hud.draw(&window);
 
 		if(battleMode){

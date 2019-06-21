@@ -36,6 +36,19 @@ an amazing game
   instead do 
   `#define HUD_H`
 
+## how to add a sprite
+  put a bunch of imgs in 
+  data/imgs
+
+  use pyForms/horizontalConcat.py prefix directory
+  to concat frames into a row
+
+  modify pyForms/concatVertical.py
+  to your needs
+
+  run pyForms/imgDims.py
+  for help
+
 ***************************************************************************************************
 ***************************************************************************************************
 ***************************************************************************************************
