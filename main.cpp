@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <map>
+#include <stdlib.h>
 
 #include "Player.hpp"
 #include "Room.hpp"
@@ -26,6 +27,7 @@ void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
 }
 
 int main(int argc, char** argv) {
+	srand(time(NULL));
 	std::string username;
 	if (argc == 2){
 		username = argv[1];
@@ -84,7 +86,7 @@ int main(int argc, char** argv) {
 	battleStats.setEnemyFaceTexture(&tmpFaceSprite);
 	battleStats.setPlayerFaceTexture(&tmpFaceSprite);
 
-	HUD hud(username, player.getCurrentQuest()); // tbh hud should be a private field of player....
+	HUD hud(username, player.getCurrentQuest()); 
 	scaleViews(&window, &mainView, &dialogue, &hud, &battleStats);
 	hud.setRoom(player.getCurRoom());
 	if(player.questCompleted())
@@ -100,7 +102,6 @@ int main(int argc, char** argv) {
 		music.play();
 		music.setLoop(true);
 	}
-
 
     while (window.isOpen()) {
         sf::Event event;
@@ -158,6 +159,9 @@ int main(int argc, char** argv) {
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
 		player.draw(&window);
 		testEnemy.draw(&window);
+		if(testEnemy.positionsSynced()){
+			testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
+		}
 		hud.draw(&window);
 
 		if(battleMode){
