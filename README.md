@@ -4,6 +4,47 @@
 ## information: 
 an amazing game 
 
+## how to install it:
+###TL;DR
+#### Mac
+```
+git clone https://github.com/awestover/theknightdawns.git
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew tap nlohmann/json
+brew install nlohmann-json
+brew install sfml
+```
+If the installation of sfml did not work, Install [sfml](https://www.sfml-dev.org/download/csfml/) from their website, and either get it with the rest of your cpp stuff or move the file with the necessary hpps and stuff (it should be include/SFML) to the dirrectory where you cloned my code
+
+#### Linux
+  * Install [json lib](https://github.com/nlohmann/json) with your package managerj
+  * Install [sfml](https://www.sfml-dev.org/download/csfml/) and either get it with the rest of your cpp stuff or move the file with the necessary hpps and stuff (it should be include/SFML) to the dirrectory where you cloned my code
+
+1) Install brew
+  * yes no matter what OS you are on (If you have a Linux based OS you can try using whatever package manager you like e.g. apt-get for Ubuntu, but I just installed brew because my Linux machine's apt-get is 1000% broken).
+  * to install brew on a mac run the following command from your terminal: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+    -- if it doesn't work try `sudo /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"` and then input your computer's password 
+    -- see [Homebrew docs](https://brew.sh) for more info
+  * to install brew not on a mac (i.e. Linux, Windows(???)) run `sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)" ` and then run 
+  ```test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile```
+  -- see [Linux brew docs](https://docs.brew.sh/Homebrew-on-Linux) for more info.
+
+2) Install the json library that I use
+  * with brew its as simple as 
+  `brew tap nlohmann/json`
+  `brew install nlohmann-json`
+  * see [the project on github](https://github.com/nlohmann/json) for more info
+  * if this doesn't work try just cloning the project
+
+3) Install sfml
+  * it might be as simple as `brew install sfml`
+  * if not, install it from [sfml download site](https://www.sfml-dev.org/download/csfml/)
+    -- if you follow this route then unforunately you will probably get a bunch of files, which are all the files that you need, but can't be included with <>
+
+
 ## methods:
 * 2D graphics library: 
   - Language: Cpp (sfml)
@@ -52,7 +93,7 @@ an amazing game
 ***************************************************************************************************
 ***************************************************************************************************
 ***************************************************************************************************
-####TODO
+#### TODO
 
 ## battle mode
     -- lots of stuff todo

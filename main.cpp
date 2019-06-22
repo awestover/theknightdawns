@@ -1,6 +1,6 @@
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 #include <iostream>
 #include <iterator>
 #include <stdio.h>
@@ -20,9 +20,6 @@
 
 void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
 	window->close();
-	for (int i = 0; i < numRooms; ++i) {
-		free(rooms[i]);
-	}
 	free(rooms);
 }
 
@@ -69,6 +66,7 @@ int main(int argc, char** argv) {
 		roomFin>>tmp;
 		roomNameIdxs[tmp] = i;
 	}
+
 	Room **rooms = (Room**)malloc(sizeof(Room)*numRooms);
 	for(std::map<std::string, int>::iterator itr = roomNameIdxs.begin(); itr != roomNameIdxs.end(); ++itr)
 		rooms[itr->second] = new Room(itr->first);
@@ -116,6 +114,7 @@ int main(int argc, char** argv) {
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Q){
 					shutdown(numRooms, &window, rooms);
+					std::cout << "no seg faults yet..." << std::endl;
 					return 0;
 				}
 				else if(event.key.code == sf::Keyboard::C)

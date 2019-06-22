@@ -9,13 +9,37 @@ printf """
 |  /  \ \| )  \  |___) (___| (___) || )   ( |   | |   | (__/  )| )   ( || () () || )  \  |
 |_/    \/|/    )_)\_______/(_______)|/     \|   )_(   (______/ |/     \|(_______)|/    )_)
 """
-printf "Do you need to create an acount? 
-Yes: I have never played before. 
-No: I am a returning player. 
-(y/n): "
-read createAcount
-if [[ "$createAcount" == "y" ]]; then
-	sh createUser.sh
-else
-	sh login.sh
-fi
+
+PS3="ENTER:"
+ 
+# set shuttle list
+select action in createAccount login howToPlay
+do
+	case $action in
+		login)
+			break;
+			;;
+		createAccount)
+			break;
+			;;
+		howToPlay)
+			echo "awsd to move. Follow the arrow to complete quests. In the process you will sometimes have to fight mages"
+			;;
+		*)		
+			echo "Error: Invalid option (choose from {1,2,3})"
+			;;		
+	esac
+done
+
+case $action in
+	login)
+		sh login.sh;
+		;;
+	createAccount)
+		sh createUser.sh; 
+		;;
+	*) 
+		echo "come again soon"
+		;;
+esac
+
