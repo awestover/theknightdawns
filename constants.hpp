@@ -12,10 +12,11 @@ const float HUD_VIEWPORT_RELATIVE_HEIGHT = 0.04;
 const sf::Color BLACK(0,0,0);
 const int FRAME_RATE = 120;
 /*! \enum DIRECTIONS
- * in my sprite sheets we are gonna follow the conventions that
+ * in my sprite sheets we are going to follow the conventions that
  * 	- sprites are TILE_WIDTH X TILE_WIDTH
- * 	- each row of sprites has the animations for a sprite in a given dirrection
+ * 	- each row of sprites has the animations for a sprite in a given direction
  * 	- each row represents a different direction
+ * 	- DO NOT CHANGE THIS ENUM, everything will break!!!!
  */
 enum DIRECTIONS { RIGHT = 0, LEFT = 1, UP = 2, DOWN = 3, IDLE = 4, ATTACK_RIGHT = 5, ATTACK_LEFT = 6, ATTACK_UP = 7, ATTACK_DOWN = 8 };
 #endif // CONSTANTS_H

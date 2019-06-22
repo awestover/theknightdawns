@@ -2,11 +2,11 @@
 # theknightdawns
 
 ## information: 
-an amazing game 
+An amazing game. NOTE: the makefile is very broken, `make clean` every time you get an error.
 
 ## how to play it:
-  * Follow installation dirrections below
-  * run `sh main.sh` and follow specified dirrections
+  * Follow installation directions below
+  * run `sh main.sh` and follow specified directions
   * OR if you want, just make a json for your account (or even don't, if you pass no username to main.cpp then it will make your username `null`) run `make` and then `./main username`
 
 
@@ -100,7 +100,7 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 ***************************************************************************************************
 #### TODO
 
-## battle mode
+### battle mode
     -- lots of stuff todo
     -- first of all what stats should they even have
     -- how does inventory play into it?
@@ -112,14 +112,14 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
         -- build defenses
         -- go up and hit with sword
 
-## fix up problems with sprites
+### fix up problems with sprites
   -- the process for importing a new sprite sheet needs to be WAYYYY easier 
 
   -- Handle different sized sprites
     -- not by making them werid sizes!! - my beautiful art :(
     -- centering is kinda hacky too though: stuff falls over the edge of tiles...
 
-# add inventory
+### add inventory
 
 ### make sure we aren't rendering stuff off screen!!
   - eh Cpp is fast, this isn't really a priority atm since worlds are at most like 16 (?) times the size of the view

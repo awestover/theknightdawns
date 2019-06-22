@@ -9,11 +9,11 @@
 #include "utilityFunctions.hpp"
 
 Player::Player(std::string roomName, std::string username) {
+	projectile.setProjectileRechargeFrames(30);
 	numAniFrames = new int[9] {6,6,5,5,4,3,3,3,3};
 	visualDimensions.x = 84; visualDimensions.y = 84;
 	curRoom = roomName;
-	tile_pos.x = 1; tile_pos.y = 1;
-	draw_pos.x = tile_pos.x*TILE_WIDTH; draw_pos.y = tile_pos.y*TILE_WIDTH; 
+	changePos(1, 1);
 	texture.loadFromFile("data/imgs/knight.png");
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0,0,visualDimensions.x,visualDimensions.y));
@@ -30,11 +30,11 @@ Player::Player(std::string roomName, std::string username) {
 
 // other
 
+
 void Player::writeUserData(){
 	std::ofstream userdata_fout("data/users/"+username+".json");
 	userdata_fout << userData;
 }
-
 
 void Player::teleport(std::string newRoom, sf::Vector2i newPos){
 	curRoom = newRoom;

@@ -25,5 +25,5 @@ class Player : public Entity {
 		void updateQuestProgress(std::string id);
 		std::string getCurrentQuest();
 		void handleEnemyCollisions(Enemy *enemy);
-};
+};;
 #endif /* ifndef PLAYER_H */

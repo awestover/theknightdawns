@@ -123,10 +123,15 @@ int main(int argc, char** argv) {
 					battleMode = true;
 				else if(event.key.code == sf::Keyboard::N) // for debugging ONLY
 					battleMode = false;
+				else if(event.key.code == sf::Keyboard::Space){
+					if(player.attackReady()){
+						player.launchAttack();
+					}
+				}
 			}
 		}
 
-		if(player.positionsSynced()){
+		if(player.positionsSynced() && player.attackReady()){
 			bool oneUpDownPressed = ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)) ^ (sf::Keyboard::isKeyPressed(sf::Keyboard::D)));
 			bool oneLeftRightPressed = ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) ^ (sf::Keyboard::isKeyPressed(sf::Keyboard::S)));
 			if(oneUpDownPressed ^ oneLeftRightPressed){
@@ -159,7 +164,7 @@ int main(int argc, char** argv) {
 		player.draw(&window);
 		player.handleEnemyCollisions(&testEnemy);
 		testEnemy.draw(&window);
-		if(testEnemy.positionsSynced()){
+		if(testEnemy.positionsSynced() && testEnemy.attackReady()){
 			testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
 		}
 		hud.draw(&window);
