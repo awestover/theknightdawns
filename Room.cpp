@@ -19,11 +19,8 @@ Room::Room (std::string roomName){
 	rock_texture.loadFromFile("data/imgs/rock.png");
 	rock_sprite.setTexture(rock_texture);
 	rock_sprite.setScale(TILE_WIDTH/(1.0*rock_sprite.getTextureRect().width), TILE_WIDTH/(1.0*rock_sprite.getTextureRect().height));
-
-	teleporterDimensions.x = 100; teleporterDimensions.y = 100;
-	teleporter_texture.loadFromFile("data/imgs/teleporter_sheet.png");
-	teleporter_sprite.setTexture(teleporter_texture);
-
+	
+	animatedObjects["teleporter"] = new Animated(sf::Vector2i(100, 100), "data/imgs/teleporter.png");
 	animatedObjects["battlePortal"] = new Animated(sf::Vector2i(100, 100), "data/imgs/battlePortal.png");
 
 	std::ifstream obstacles_fin("data/rooms/"+roomName+"/obstacles.txt");
@@ -54,17 +51,12 @@ void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *fa
 		}
 	}
 
-	teleporterAniCt += 1;
-	if(teleporterAniCt == teleporterAniTurnOverCt){
-		teleporterAniCt = 0;
-		teleporterAniFrame = (teleporterAniFrame + 1) % teleporterNumAniFrames;
-	}
-	teleporter_sprite.setTextureRect(sf::IntRect(teleporterAniFrame*teleporterDimensions.x, 0, teleporterDimensions.x, teleporterDimensions.y));
-
+	// this is WRONG WRONG WRONG: if there are multiple teleporters then it makes the animation go by way faster!!!
+	// potential hacky fix: bump up the frame switch ct ;) (make it a parameter, or make a setter function)
 	for(json::iterator it = objects.begin(); it!=objects.end(); ++it){
 		sf::Vector2f tmp((*it)["pos"][0], (*it)["pos"][1]);
-		tmp = tmp*(1.0f*TILE_WIDTH);
 		if((*it)["type"] == "dialogue"){
+			tmp = tmp*(1.0f*TILE_WIDTH);
 			std::string imgName = (*it)["body"]["face"];
 			sf::Texture dialogueTextureTmp = faces->at(imgName);
 			dialogue_prompt_sprite.setTexture(dialogueTextureTmp);
@@ -72,16 +64,9 @@ void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *fa
 			window->draw(dialogue_prompt_sprite);
 			
 		}
-		else if((*it)["type"] == "teleporter") {
-			tmp.x -= (teleporterDimensions.x-TILE_WIDTH)/2;
-			tmp.y -= (teleporterDimensions.y-TILE_WIDTH)/2;
-			teleporter_sprite.setPosition(tmp);
-			window->draw(teleporter_sprite);
-		}
-		else if((*it)["type"] == "battlePortal"){
-			// this is gonna cause some problems, if there are multiple, then the animation is not correctly happening
-			animatedObjects["battlePortal"]->changePos(tmp.x/TILE_WIDTH, tmp.y/TILE_WIDTH);
-			animatedObjects["battlePortal"]->draw(window);
+		else { // types: teleporter, battlePortal
+			animatedObjects[(*it)["type"]]->changePos(tmp.x, tmp.y);
+			animatedObjects[(*it)["type"]]->draw(window);
 		}
 	}
 }

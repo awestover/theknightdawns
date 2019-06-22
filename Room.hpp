@@ -19,8 +19,8 @@ class Room {
 		bool **obstacles;
 		json objects;
 		std::map<std::string, Animated*> animatedObjects;
-		sf::Texture rock_texture, teleporter_texture, dialogue_prompt_texture, bg_texture;
-		sf::Sprite rock_sprite, teleporter_sprite, dialogue_prompt_sprite, bg_sprite;
+		sf::Texture rock_texture, dialogue_prompt_texture, bg_texture;
+		sf::Sprite rock_sprite, dialogue_prompt_sprite, bg_sprite;
 		sf::Vector2i teleporterDimensions;
 		const int teleporterNumAniFrames = 61;
 		int teleporterAniFrame = 0;
