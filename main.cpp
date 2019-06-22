@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 			}
 		}
 
-		if(player.positionsSynced() && player.attackReady()){
+		if(player.positionsSynced() && !player.shootingProjectile()){
 			bool oneUpDownPressed = ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)) ^ (sf::Keyboard::isKeyPressed(sf::Keyboard::D)));
 			bool oneLeftRightPressed = ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) ^ (sf::Keyboard::isKeyPressed(sf::Keyboard::S)));
 			if(oneUpDownPressed ^ oneLeftRightPressed){
@@ -162,9 +162,10 @@ int main(int argc, char** argv) {
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
 		player.draw(&window);
-		player.handleEnemyCollisions(&testEnemy);
+		player.handleProjectileCollisions(&testEnemy);
 		testEnemy.draw(&window);
-		if(testEnemy.positionsSynced() && testEnemy.attackReady()){
+		testEnemy.handleProjectileCollisions(&player);
+		if(testEnemy.positionsSynced() && !testEnemy.shootingProjectile()){
 			testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
 		}
 		hud.draw(&window);

@@ -3,15 +3,18 @@
 #include "Mover.hpp"
 class Projectile : public Mover {
 	private:
-		bool active = false;
+		bool moving = false;
+		bool charged = true;
 		int projectileRechargeFrames = 100;
-		int projectileActiveFrameCt = 0;
+		int projectileFrameCt = 0;
 		sf::Vector2i moveDirection;
 	public: 
 		Projectile();
-		bool isActive();
-		void activate(sf::Vector2i startPos, sf::Vector2i direction);
+		bool isMoving();
+		bool isCharged();
+		void fire(sf::Vector2i startPos, sf::Vector2i direction);
 		void draw(sf::RenderWindow *window);
 		void setProjectileRechargeFrames(int projectileRechargeFrames);
+		void handleHit();
 };
 #endif /* ifndef PROJECTILE_H */

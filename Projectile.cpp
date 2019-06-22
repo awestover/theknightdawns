@@ -12,27 +12,39 @@ Projectile::Projectile(){
 	sprite.setTextureRect(sf::IntRect(0,0,visualDimensions.x,visualDimensions.y));
 }
 
-bool Projectile::isActive() {
-	return active;
+bool Projectile::isMoving() {
+	return moving;
 }
 
-void Projectile::activate(sf::Vector2i startPos, sf::Vector2i direction){
+bool Projectile::isCharged() {
+	return charged;
+}
+
+void Projectile::fire(sf::Vector2i startPos, sf::Vector2i direction){
 	changePos(startPos.x, startPos.y);
-	active = true;
+	moving = true;
+	charged = false;
 	moveDirection.x = direction.x;
 	moveDirection.y = direction.y;
 }
 
+void Projectile::handleHit(){
+	moving = false;
+}
+
 void Projectile::draw(sf::RenderWindow *window) {
-	if(active){
+	if(moving){
 		Mover::draw(window);
-		projectileActiveFrameCt += 1;
-		if (projectileActiveFrameCt > projectileRechargeFrames){
-			projectileActiveFrameCt = 0;
-			active = false;
-		}
 		if(positionsSynced()){
 			setPos(tile_pos.x+moveDirection.x, tile_pos.y+moveDirection.y);
+		}
+	}
+	if(!charged){
+		projectileFrameCt += 1;
+		if (projectileFrameCt > projectileRechargeFrames){
+			projectileFrameCt = 0;
+			moving = false;
+			charged = true;
 		}
 	}
 }

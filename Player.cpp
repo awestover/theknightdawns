@@ -86,16 +86,6 @@ void Player::updateQuest(){
 	writeUserData();
 }
 
-void Player::handleEnemyCollisions(Enemy *enemy){
-	// weird thing: what if positions aren't synced!!! 
-	// temporary solution: don't care about it
-	if (enemy->getTilePos().x == tile_pos.x && enemy->getTilePos().y == tile_pos.y){
-		this->handleAttack(enemy->getAttack());
-		enemy->handleAttack(this->getAttack());
-	}
-
-}
-
 // getters
 std::string Player::getCurRoom(){
 	return curRoom;

@@ -14,6 +14,8 @@ class Entity : public Mover {
 		int getAttack();
 		void draw(sf::RenderWindow *window);
 		bool attackReady();
+		bool shootingProjectile();
 		void launchAttack();
+		void handleProjectileCollisions(Entity *other);
 };
 #endif /* ifndef ENTITY_H */

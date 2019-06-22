@@ -17,7 +17,7 @@ void Entity::draw(sf::RenderWindow *window){
 	if (aniDirection < IDLE){
 		attackDirection = aniDirection + 5;
 	}
-	else if(attackDirection > IDLE && !projectile.isActive()){
+	else if(attackDirection > IDLE && !projectile.isMoving()){
 		aniDirection -= 5;
 	}
 }
@@ -32,11 +32,24 @@ void Entity::launchAttack(){
 		projectileDirection.y = -1;
 	else if(attackDirection == 8)
 		projectileDirection.y = 1;
-	projectile.activate(tile_pos, projectileDirection);
+	projectile.fire(tile_pos, projectileDirection);
 	aniDirection = attackDirection;
 }
 
 bool Entity::attackReady() {
-	return !projectile.isActive();
+	return projectile.isCharged();
+}
+
+bool Entity::shootingProjectile(){
+	return projectile.isMoving();
+}
+
+void Entity::handleProjectileCollisions(Entity *other){
+	// weird thing: what if positions aren't synced!!! 
+	// temporary solution: don't care about it
+	if (other->getTilePos().x == projectile.getTilePos().x && other->getTilePos().y == projectile.getTilePos().y){
+		other->handleAttack(getAttack());
+		projectile.handleHit();
+	}
 }
 

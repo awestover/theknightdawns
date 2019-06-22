@@ -16,19 +16,19 @@ void Enemy::wander(sf::Vector2i roomDimensions){
 	int dx = 0; int dy = 0;
 	int curRand = rand()%1000;
 	int moveSize = 1; // right now collisions depend on this being 1 (which is kinda sketch)
-	if (curRand % 100 == 0){
+	if (curRand % 1000 == 0){
 		if (tile_pos.x < roomDimensions.x-moveSize)
 			dx = moveSize;
 	} 
-	else if(curRand % 100 == 1){
+	else if(curRand % 1000 == 1){
 		if(tile_pos.x > moveSize-1)
 			dx = -moveSize;
 	}
-	else if(curRand % 100 == 2){
+	else if(curRand % 1000 == 2){
 		if(tile_pos.y < roomDimensions.y-moveSize)
 			dy = moveSize;
 	}
-	else if(curRand % 100 == 3){
+	else if(curRand % 1000 == 3){
 		if(tile_pos.y > moveSize-1)
 			dy = -moveSize;
 	}
