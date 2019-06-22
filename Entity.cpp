@@ -1,6 +1,5 @@
 
 #include <math.h>
-#include <iostream>
 
 #include "Entity.hpp"
 

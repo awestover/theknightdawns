@@ -1,6 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H value
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 
 #include "constants.hpp"
 

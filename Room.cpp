@@ -1,5 +1,4 @@
 
-#include <SFML/Graphics.hpp>
 #include <fstream>
 #include <sstream>
 #include <iostream>

@@ -1,6 +1,6 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 const int TILE_WIDTH = 64;
 const sf::Vector2f SCREEN_DIMENSIONS(TILE_WIDTH*16, TILE_WIDTH*12);
 const sf::Vector2f DIALOGUE_DIMENSIONS(SCREEN_DIMENSIONS.x, 100);

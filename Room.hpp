@@ -1,5 +1,6 @@
 #ifndef ROOM_H
 #define ROOM_H
+#include "SFML/Graphics.hpp"
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 #include <string>

@@ -1,6 +1,6 @@
 #ifndef TEXT_DISPLAY_H
 #define TEXT_DISPLAY_H value
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 class TextDisplay {
 	protected:
 		sf::View view;

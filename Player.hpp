@@ -1,6 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
