@@ -17,12 +17,15 @@ class Entity{
 		int aniFrame = 0;
 		const int aniTurnOverCt = 10; // how many counts of aniCt to stay on a single frame 
 		int aniCt = 0;
+		int health = 0;
+		int attack = 1;
 	public:
 		sf::Vector2i getTilePos();
 		sf::Vector2f getDrawPos();
 		bool positionsSynced();
 		void draw(sf::RenderWindow *window);
 		void setPos(int xpos, int ypos);
-
+		void handleAttack(int damage);
+		int getAttack();
 };
 #endif /* ifndef ENTITY_H */

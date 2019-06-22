@@ -158,6 +158,7 @@ int main(int argc, char** argv) {
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
 		player.draw(&window);
+		player.handleEnemyCollisions(&testEnemy);
 		testEnemy.draw(&window);
 		if(testEnemy.positionsSynced()){
 			testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());

@@ -6,6 +6,7 @@ using json = nlohmann::json;
 
 #include "constants.hpp"
 #include "Entity.hpp"
+#include "Enemy.hpp"
 
 class Player : public Entity {
 	private:
@@ -22,7 +23,7 @@ class Player : public Entity {
 		bool questCompleted();
 		void updateQuest();
 		void updateQuestProgress(std::string id);
-		int getHealth();
 		std::string getCurrentQuest();
+		void handleEnemyCollisions(Enemy *enemy);
 };
 #endif /* ifndef PLAYER_H */

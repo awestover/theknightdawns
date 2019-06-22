@@ -1,11 +1,21 @@
 
 #include <math.h>
+#include <iostream>
 
 #include "Entity.hpp"
 
 void Entity::setPos(int xpos, int ypos){
 	tile_pos.x = xpos;
 	tile_pos.y = ypos;
+}
+
+void Entity::handleAttack(int damage){
+	health -= damage;
+	health = health < 0 ? 0 : health;
+}
+
+int Entity::getAttack(){
+	return attack;
 }
 
 void Entity::draw(sf::RenderWindow *window) {

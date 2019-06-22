@@ -24,6 +24,8 @@ Player::Player(std::string roomName, std::string username) {
 
 	std::ifstream quests_fin("data/quests.json");
 	quests_fin >> quests;
+
+	health = userData["baseStats"]["health"];
 }
 
 // other
@@ -71,9 +73,10 @@ bool Player::questCompleted(){
 void Player::updateQuest(){
 	int i = getCurrentQuestIndex();
 	// see if this can be improved...
-	int tmpA = quests[i]["rewards"]["health"];
-	int tmpB = userData["baseStats"]["health"];
-	userData["baseStats"]["health"] = tmpA + tmpB;
+	int newHealth = quests[i]["rewards"]["health"];
+	int oldHealth = userData["baseStats"]["health"];
+	userData["baseStats"]["health"] = newHealth + oldHealth;
+	health += newHealth;
 
 	userData["currentQuest"] = quests[i+1]["name"];
 	userData["questProgress"] = std::vector<bool>();
@@ -83,11 +86,17 @@ void Player::updateQuest(){
 	writeUserData();
 }
 
-// getters
-int Player::getHealth(){
-	return userData["baseStats"]["health"];
+void Player::handleEnemyCollisions(Enemy *enemy){
+	// weird thing: what if positions aren't synced!!! 
+	// temporary solution: don't care about it
+	if (enemy->getTilePos().x == tile_pos.x && enemy->getTilePos().y == tile_pos.y){
+		this->handleAttack(enemy->getAttack());
+		enemy->handleAttack(this->getAttack());
+	}
+
 }
 
+// getters
 std::string Player::getCurRoom(){
 	return curRoom;
 }
