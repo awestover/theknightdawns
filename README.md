@@ -29,18 +29,18 @@ If the installation of sfml did not work, Install [sfml](https://www.sfml-dev.or
 1) Install brew
   * yes no matter what OS you are on (If you have a Linux based OS you can try using whatever package manager you like e.g. apt-get for Ubuntu, but I just installed brew because my Linux machine's apt-get is 1000% broken).
   * to install brew on a mac run the following command from your terminal: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-    -- if it doesn't work try `sudo /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"` and then input your computer's password 
-    -- see [Homebrew docs](https://brew.sh) for more info
+    - if it doesn't work try `sudo /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"` and then input your computer's password 
+    - see [Homebrew docs](https://brew.sh) for more info
   * to install brew not on a mac (i.e. Linux, Windows(???)) run `sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)" ` and then run 
 
 ```bash 
 test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
 test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+test -r ~/.bash_profile && echo "eval \$($(brew -prefix)/bin/brew shellenv)" >>~/.bash_profile
+echo "eval \$($(brew -prefix)/bin/brew shellenv)" >>~/.profile
 ``` 
 
--- see [Linux brew docs](https://docs.brew.sh/Homebrew-on-Linux) for more info.
+- see [Linux brew docs](https://docs.brew.sh/Homebrew-on-Linux) for more info.
 
 2) Install the json library that I use
   * with brew its as simple as 
@@ -52,7 +52,7 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 3) Install sfml
   * it might be as simple as `brew install sfml`
   * if not, install it from [sfml download site](https://www.sfml-dev.org/download/csfml/)
-    -- if you follow this route then unforunately you will probably get a bunch of files, which are all the files that you need, but can't be included with <>
+    - if you follow this route then unforunately you will probably get a bunch of files, which are all the files that you need, but can't be included with <>
 
 ## documentation
 ### file I/O
@@ -67,7 +67,7 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
   sprites: top left corner
   text: top left corner
 
-  -- moral of the story: views are the only thing that need a center
+  - moral of the story: views are the only thing that need a center
 
 ## object instantiation
   saying 
@@ -100,30 +100,31 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 ***************************************************************************************************
 #### TODO
 
+### add story line & design
+  - croud sourced???
+
+### Quest arrow
+  - Dijkstras!!!!
+
 ### battle mode
-    -- lots of stuff todo
-    -- first of all what stats should they even have
-    -- how does inventory play into it?
-    -- i think questing should level up character base health etc
-    -- in fight some actions could be
-        -- summon minions
-            -- chalkling circle
-        -- shoot / cast magic spell
-        -- build defenses
-        -- go up and hit with sword
-
-### fix up problems with sprites
-  -- the process for importing a new sprite sheet needs to be WAYYYY easier 
-
-  -- Handle different sized sprites
-    -- not by making them werid sizes!! - my beautiful art :(
-    -- centering is kinda hacky too though: stuff falls over the edge of tiles...
+    - first of all what stats should they even have
+    - how does inventory play into it?
+    - i think questing should level up character base health etc
+    - in fight some actions could be
+        - summon minions
+            - chalkling circle
+        - shoot / cast magic spell
+        - build defenses
+        - go up and hit with sword
 
 ### add inventory
 
+        - gets stored in userData
+
 ### make sure we aren't rendering stuff off screen!!
+
   - eh Cpp is fast, this isn't really a priority atm since worlds are at most like 16 (?) times the size of the view
-  -- but later: "sure why not"
+  - but later: "sure why not"
 
 ***************************************************************************************************
 ***************************************************************************************************
