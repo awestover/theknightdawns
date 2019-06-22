@@ -26,11 +26,15 @@ If the installation of sfml did not work, Install [sfml](https://www.sfml-dev.or
     -- if it doesn't work try `sudo /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"` and then input your computer's password 
     -- see [Homebrew docs](https://brew.sh) for more info
   * to install brew not on a mac (i.e. Linux, Windows(???)) run `sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)" ` and then run 
-  ```test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+
+```bash 
+test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
 test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile```
-  -- see [Linux brew docs](https://docs.brew.sh/Homebrew-on-Linux) for more info.
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+``` 
+
+-- see [Linux brew docs](https://docs.brew.sh/Homebrew-on-Linux) for more info.
 
 2) Install the json library that I use
   * with brew its as simple as 
