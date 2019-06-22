@@ -4,8 +4,14 @@
 ## information: 
 an amazing game 
 
+## how to play it:
+  * Follow installation dirrections below
+  * run `sh main.sh` and follow specified dirrections
+  * OR if you want, just make a json for your account (or even don't, if you pass no username to main.cpp then it will make your username `null`) run `make` and then `./main username`
+
+
 ## how to install it:
-###TL;DR
+### TL;DR
 #### Mac
 ```
 git clone https://github.com/awestover/theknightdawns.git
@@ -47,11 +53,6 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
   * it might be as simple as `brew install sfml`
   * if not, install it from [sfml download site](https://www.sfml-dev.org/download/csfml/)
     -- if you follow this route then unforunately you will probably get a bunch of files, which are all the files that you need, but can't be included with <>
-
-
-## methods:
-* 2D graphics library: 
-  - Language: Cpp (sfml)
 
 ## documentation
 ### file I/O
