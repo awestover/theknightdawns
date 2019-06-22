@@ -19,5 +19,6 @@ class Entity : public Mover {
 		void launchAttack();
 		void handleProjectileCollisions(Entity *other, BattleStats *battleStats, std::string victim);
 		int getHealth();
+		bool isDead();
 };
 #endif /* ifndef ENTITY_H */

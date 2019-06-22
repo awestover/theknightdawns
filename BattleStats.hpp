@@ -1,6 +1,5 @@
 #ifndef BATTLE_STATS_H
 #define BATTLE_STATS_H
-#include "SFML/Graphics.hpp"
 #include <map>
 #include "TextDisplay.hpp"
 class BattleStats : public TextDisplay {

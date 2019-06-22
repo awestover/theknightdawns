@@ -160,10 +160,16 @@ int main(int argc, char** argv) {
 		window.setView(mainView);
 
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
-		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
+		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces, &battleMode);
 		player.draw(&window);
+		if(player.isDead()){
+			battleMode = false;
+		}
 		player.handleProjectileCollisions(&testEnemy, &battleStats, "enemy");
 		testEnemy.draw(&window);
+		if(testEnemy.isDead()){
+			battleMode = false;
+		}
 		testEnemy.handleProjectileCollisions(&player, &battleStats, "player");
 		if(testEnemy.positionsSynced() && !testEnemy.shootingProjectile())
 			testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());

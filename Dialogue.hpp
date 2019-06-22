@@ -1,6 +1,5 @@
 #ifndef DIALOGUE_H
 #define DIALOGUE_H
-#include "SFML/Graphics.hpp"
 #include "TextDisplay.hpp"
 class Dialogue : public TextDisplay {
 	private:

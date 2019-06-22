@@ -28,6 +28,21 @@
     {
         "pos": [
             1,
+            2
+        ],
+        "type": "battlePortal",
+        "id": "b1",
+        "body": {
+            "newRoom": "nextRoom",
+            "newPos": [
+                1,
+                2
+            ]
+        }
+    },
+    {
+        "pos": [
+            1,
             5
         ],
         "type": "teleporter",

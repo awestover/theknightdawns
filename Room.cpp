@@ -24,8 +24,7 @@ Room::Room (std::string roomName){
 	teleporter_texture.loadFromFile("data/imgs/teleporter_sheet.png");
 	teleporter_sprite.setTexture(teleporter_texture);
 
-	dialogue_prompt_texture.loadFromFile("data/imgs/dialoguePrompt.png");
-	dialogue_prompt_sprite.setTexture(dialogue_prompt_texture);
+	animatedObjects["battlePortal"] = new Animated(sf::Vector2i(100, 100), "data/imgs/battlePortal.png");
 
 	std::ifstream obstacles_fin("data/rooms/"+roomName+"/obstacles.txt");
 	obstacles = (bool**)malloc(sizeof(bool*)*dimensions.y);
@@ -40,7 +39,6 @@ Room::Room (std::string roomName){
 
 	std::ifstream objects_fin("data/rooms/"+roomName+"/objects.json");
 	objects_fin >> objects;
-
 }
 
 void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *faces){
@@ -68,7 +66,7 @@ void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *fa
 		tmp = tmp*(1.0f*TILE_WIDTH);
 		if((*it)["type"] == "dialogue"){
 			std::string imgName = (*it)["body"]["face"];
-			sf::Texture dialogueTextureTmp = faces->at(imgName); // NOTE: this might be very bad
+			sf::Texture dialogueTextureTmp = faces->at(imgName);
 			dialogue_prompt_sprite.setTexture(dialogueTextureTmp);
 			dialogue_prompt_sprite.setPosition(tmp);
 			window->draw(dialogue_prompt_sprite);
@@ -79,6 +77,11 @@ void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *fa
 			tmp.y -= (teleporterDimensions.y-TILE_WIDTH)/2;
 			teleporter_sprite.setPosition(tmp);
 			window->draw(teleporter_sprite);
+		}
+		else if((*it)["type"] == "battlePortal"){
+			// this is gonna cause some problems, if there are multiple, then the animation is not correctly happening
+			animatedObjects["battlePortal"]->changePos(tmp.x/TILE_WIDTH, tmp.y/TILE_WIDTH);
+			animatedObjects["battlePortal"]->draw(window);
 		}
 	}
 }
@@ -96,7 +99,7 @@ bool Room::collidesWithObstacles(sf::Vector2i tile_pos){
 	return false;
 }
 
-void Room::handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud, std::map<std::string, sf::Texture> *faces){
+void Room::handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud, std::map<std::string, sf::Texture> *faces, bool *battleMode){
 	for(json::iterator it = objects.begin(); it!=objects.end(); ++it){
 		sf::Vector2i tmp((*it)["pos"][0], (*it)["pos"][1]);
 		if(player->getTilePos() == tmp){
@@ -113,6 +116,14 @@ void Room::handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud, 
 				newPos.y = (*it)["body"]["newPos"][1];
 				player->teleport((*it)["body"]["newRoom"], newPos);
 				hud->setRoom(player->getCurRoom());
+			}
+			else if((*it)["type"] == "battlePortal"){
+				sf::Vector2i newPos;
+				newPos.x = (*it)["body"]["newPos"][0];
+				newPos.y = (*it)["body"]["newPos"][1];
+				player->teleport((*it)["body"]["newRoom"], newPos);
+				hud->setRoom(player->getCurRoom());
+				(*battleMode) = true;
 			}
 		}
 	}

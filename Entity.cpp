@@ -60,3 +60,6 @@ void Entity::handleProjectileCollisions(Entity *other, BattleStats *battleStats,
 	}
 }
 
+bool Entity::isDead(){
+	return health <= 0;
+}

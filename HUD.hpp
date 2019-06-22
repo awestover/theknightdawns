@@ -1,6 +1,5 @@
 #ifndef HUD_H
 #define HUD_H
-#include "SFML/Graphics.hpp"
 #include "TextDisplay.hpp"
 class HUD : public TextDisplay {
 	private:

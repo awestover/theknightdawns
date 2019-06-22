@@ -14,8 +14,6 @@ void Mover::changePos(int xpos, int ypos){
 }
 
 void Mover::draw(sf::RenderWindow *window) {
-	sprite.setPosition(draw_pos.x - (visualDimensions.x - TILE_WIDTH), draw_pos.y - (visualDimensions.y - TILE_WIDTH));
-
 	if(!positionsSynced()){
 		int dx = TILE_WIDTH*tile_pos.x - draw_pos.x;
 		int dy = TILE_WIDTH*tile_pos.y - draw_pos.y;
@@ -48,15 +46,7 @@ void Mover::draw(sf::RenderWindow *window) {
 		if(aniDirection <= IDLE)
 			aniDirection = IDLE;
 	}
-
-	aniCt += 1;
-	if(aniCt == aniTurnOverCt){
-		aniCt = 0;
-		aniFrame = (aniFrame + 1) % numAniFrames[aniDirection];
-	}
-
-	sprite.setTextureRect(sf::IntRect(aniFrame*visualDimensions.x, aniDirection*visualDimensions.y, visualDimensions.x, visualDimensions.y));
-	window->draw(sprite);
+	Animated::draw(window);
 }
 
 bool Mover::positionsSynced(){
@@ -65,11 +55,7 @@ bool Mover::positionsSynced(){
 	return xSynced & ySynced;
 }
 
-// getters
 sf::Vector2i Mover::getTilePos(){
 	return tile_pos;
 }
 
-sf::Vector2f Mover::getDrawPos(){
-	return draw_pos;
-}

@@ -1,8 +1,5 @@
 
-#include <iostream>
-
 #include "Dialogue.hpp"
-#include "constants.hpp"
 
 Dialogue::Dialogue(){
 	view.setSize(DIALOGUE_DIMENSIONS);
