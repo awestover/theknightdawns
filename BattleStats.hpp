@@ -8,9 +8,10 @@ class BattleStats : public TextDisplay {
 		sf::Sprite playerFace, enemyFace;
 		sf::Vertex battleStatsBackdrop[4];
 	public:
-		BattleStats();
+		BattleStats(int playerHealth, int enemyHealth);
 		void draw(sf::RenderWindow *window);
 		void setEnemyFaceTexture(sf::Texture *texture);
 		void setPlayerFaceTexture(sf::Texture *texture);
+		void updateHealth(std::string whose, int playerHealth);
 };
 #endif // BATTLE_STATS_H

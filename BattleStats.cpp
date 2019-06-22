@@ -4,7 +4,7 @@
 #include "BattleStats.hpp"
 #include "constants.hpp"
 
-BattleStats::BattleStats(){
+BattleStats::BattleStats(int playerHealth, int enemyHealth){
 	view.setSize(BATTLE_STATS_DIMENSIONS);
 	view.setCenter(BATTLE_STATS_DIMENSIONS*0.5f);
 
@@ -16,15 +16,16 @@ BattleStats::BattleStats(){
 	texts["enemyHealth"] = new sf::Text;
 	texts["enemyAttack"] = new sf::Text;
 	initializeText(texts["playerHealth"], BATTLE_STATS_DIMENSIONS.y, 0, "Health: 0");
+	updateHealth("player", playerHealth);
 	initializeText(texts["playerAttack"], BATTLE_STATS_DIMENSIONS.y, TEXT_SIZE, "Attack: 0");
 	initializeText(texts["enemyHealth"], BATTLE_STATS_DIMENSIONS.x/2+BATTLE_STATS_DIMENSIONS.y, 0, "Health: 0");
+	updateHealth("enemy", enemyHealth);
 	initializeText(texts["enemyAttack"], BATTLE_STATS_DIMENSIONS.x/2+BATTLE_STATS_DIMENSIONS.y, TEXT_SIZE, "Attack: 0");
 
 	battleStatsBackdrop[0] = sf::Vertex(sf::Vector2f(0, 0), sf::Color(57,74,102,150));
 	battleStatsBackdrop[1] = sf::Vertex(sf::Vector2f(0, BATTLE_STATS_DIMENSIONS.y), sf::Color(73,104,155,150));
 	battleStatsBackdrop[2] = sf::Vertex(sf::Vector2f(BATTLE_STATS_DIMENSIONS.x, BATTLE_STATS_DIMENSIONS.y), sf::Color(54,107,193,150));
 	battleStatsBackdrop[3] = sf::Vertex(sf::Vector2f(BATTLE_STATS_DIMENSIONS.x, 0), sf::Color(17,95,221,150));
-
 }
 
 void BattleStats::draw(sf::RenderWindow *window){
@@ -46,4 +47,10 @@ void BattleStats::setEnemyFaceTexture(sf::Texture *texture){
 	enemyFace.setPosition(BATTLE_STATS_DIMENSIONS.x/2,0);
 	enemyFace.setTexture(*texture);
 }
+
+void BattleStats::updateHealth(std::string whose, int playerHealth){
+	std::string prefix = "Health: ";
+	std::string suffix = std::to_string(playerHealth);
+	texts[whose+"Health"]->setString(prefix+suffix);
+};
 

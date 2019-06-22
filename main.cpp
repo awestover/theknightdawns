@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
 
 	Player player(rooms[0]->getName(), username);
 	Enemy testEnemy;
-	BattleStats battleStats;
+	BattleStats battleStats(player.getHealth(), testEnemy.getHealth());
 	Dialogue dialogue;
 
 	// super temporrary solution, the character shown needs to be given in the objects.json file for the room
@@ -162,26 +162,22 @@ int main(int argc, char** argv) {
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces);
 		player.draw(&window);
-		player.handleProjectileCollisions(&testEnemy);
+		player.handleProjectileCollisions(&testEnemy, &battleStats, "enemy");
 		testEnemy.draw(&window);
-		testEnemy.handleProjectileCollisions(&player);
-		if(testEnemy.positionsSynced() && !testEnemy.shootingProjectile()){
+		testEnemy.handleProjectileCollisions(&player, &battleStats, "player");
+		if(testEnemy.positionsSynced() && !testEnemy.shootingProjectile())
 			testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
-		}
 		hud.draw(&window);
 
 		if(battleMode){
 			battleStats.draw(&window);
 		}
 		else{ // normalMode
-			if(dialogue.isOpen()){
+			if(dialogue.isOpen())
 				dialogue.draw(&window);
-			}
 		}
-
         window.display();
     }
-
     return 0;
 }
 

@@ -2,6 +2,7 @@
 #define ENTITY_H value
 #include "Mover.hpp"
 #include "Projectile.hpp"
+#include "BattleStats.hpp"
 
 class Entity : public Mover {
 	protected:
@@ -10,12 +11,13 @@ class Entity : public Mover {
 		Projectile projectile;
 		int attackDirection = 5; // 5678 are the attack directions
 	public:
-		void handleAttack(int damage);
+		void handleAttack(int damage, BattleStats *battleStats, std::string name);
 		int getAttack();
 		void draw(sf::RenderWindow *window);
 		bool attackReady();
 		bool shootingProjectile();
 		void launchAttack();
-		void handleProjectileCollisions(Entity *other);
+		void handleProjectileCollisions(Entity *other, BattleStats *battleStats, std::string victim);
+		int getHealth();
 };
 #endif /* ifndef ENTITY_H */
