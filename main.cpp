@@ -162,26 +162,22 @@ int main(int argc, char** argv) {
 		rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
 		rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces, &battleMode);
 		player.draw(&window);
-		if(player.isDead()){
-			battleMode = false;
-		}
-		player.handleProjectileCollisions(&testEnemy, &battleStats, "enemy");
-		testEnemy.draw(&window);
-		if(testEnemy.isDead()){
-			battleMode = false;
-		}
-		testEnemy.handleProjectileCollisions(&player, &battleStats, "player");
-		if(testEnemy.positionsSynced() && !testEnemy.shootingProjectile())
-			testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
-		hud.draw(&window);
 
 		if(battleMode){
+			player.handleProjectileCollisions(&testEnemy, &battleStats, "enemy");
+			testEnemy.handleProjectileCollisions(&player, &battleStats, "player");
+			testEnemy.draw(&window);
+			if(testEnemy.positionsSynced() && !testEnemy.shootingProjectile())
+				testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
+			if(player.isDead() || testEnemy.isDead())
+				battleMode = false;
 			battleStats.draw(&window);
 		}
 		else{ // normalMode
 			if(dialogue.isOpen())
 				dialogue.draw(&window);
 		}
+		hud.draw(&window);
         window.display();
     }
     return 0;
