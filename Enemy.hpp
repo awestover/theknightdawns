@@ -6,5 +6,6 @@ class Enemy : public Entity {
 	public:
 		Enemy();
 		void wander(sf::Vector2i roomDimensions);
+		void setHealth(int health);
 };
 #endif /* ifndef ENEMY_H */

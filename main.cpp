@@ -155,6 +155,9 @@ int main(int argc, char** argv) {
 		player.draw(&window);
 
 		if(battleMode){
+			if(testEnemy.isDead()){ // this is bad, is it even safe????
+				testEnemy.setHealth(10);
+			}
 			player.handleProjectileCollisions(&testEnemy, &battleStats, "enemy");
 			testEnemy.handleProjectileCollisions(&player, &battleStats, "player");
 			testEnemy.draw(&window);

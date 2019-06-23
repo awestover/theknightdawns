@@ -42,3 +42,6 @@ void Enemy::wander(sf::Vector2i roomDimensions){
 	setPos(tile_pos.x+dx, tile_pos.y+dy);
 }
 
+void Enemy::setHealth(int health){
+	this->health = health;
+}
