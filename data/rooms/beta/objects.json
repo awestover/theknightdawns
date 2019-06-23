@@ -7,9 +7,9 @@
         "type": "dialogue",
         "id": "d1",
         "body": {
-            "title": "quest, part 1",
-            "description": "This is the first quest",
-            "face": "crab.png"
+            "title": "lol",
+            "description": "dang you actually beat that mage. well that's great. because all the other mages are exactly the same as that one. \n In fact, there is really only one mage. \nso, i think your path might be totally clear for the rest of the way. \n ok fine, ill do something stupid, and just hard code in enemy regeneration\nyou can thank me later\nalso, you might have noticed that the mage was really stupid\nill fix that later too\nanyways, see yah after you get the next enemy (please don't die, I think the code will seg fault;))",
+            "face": "butterfly.png"
         }
     },
     {

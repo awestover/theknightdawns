@@ -1,7 +1,15 @@
 
 #include "Dialogue.hpp"
+#include <math.h>
 
+// Important:
+// the layout of a dialogue is 
+// a square DIALOGUE_DIMENSIONS.y X DIALOGUE_DIMENSIONS.y with a face in it on the far left
+// and then the text
+// and a close prompt it the bottom right
 Dialogue::Dialogue(){
+	TEXT_PADDING = 7.5f;
+	TEXT_SIZE = 15;
 	view.setSize(DIALOGUE_DIMENSIONS);
 	view.setCenter(DIALOGUE_DIMENSIONS*0.5f);
 
@@ -32,6 +40,10 @@ void Dialogue::draw(sf::RenderWindow *window){
 	window->setView(view);
 	window->draw(dialogueBackdrop, 4, sf::Quads);
 	window->draw(faceSprite);
+	float yProposedScale = DIALOGUE_DIMENSIONS.y/(1.0*faceSprite.getTextureRect().height);
+	float xProposedScale = DIALOGUE_DIMENSIONS.y/(1.0*faceSprite.getTextureRect().width);
+	float actualScale = fmin(xProposedScale, yProposedScale);
+	faceSprite.setScale(actualScale, actualScale);
 	for(std::map<std::string, sf::Text*>::iterator it = texts.begin(); it != texts.end(); it++){
 		window->draw(*(it->second));
 	}

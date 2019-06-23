@@ -7,8 +7,8 @@
         "type": "dialogue",
         "id": "d1",
         "body": {
-            "title": "quest, part 1",
-            "description": "OK. I gotta break it to yah. All of your 'knight' friends are super dead. these mage guys didn't like them, so they totally killed all of them. not really sure why they haven't gotten you yet, but they probably will soon so don't worry. anyways, that kinda sucks. pretty much your only recourse is to go on a super long journey and find a really powerful magical artifact that will teleport them all into an affine plane in R4 that is parallel to the 3 dimensional hyperplane that you exist in. Then you will be pretty safe. note: time ain't a spatial dimension!! so anyways you must embark on a really difficult journey. go do it! (by going through the teleporter)",
+            "title": "first dialogue box thing",
+            "description": "OK. I gotta break it to yah. All of your 'knight' friends are super dead.\n these mage guys didn't like them, so they totally killed all of them.\n not really sure why they haven't gotten you yet, but they probably will soon so don't worry. anyways, that kinda sucks.\n pretty much your only recourse is to go on a super long journey and find a really powerful magical artifact \n that will teleport them all into an affine plane in R4 that is parallel to the 3 dimensional hyperplane that you exist in. \nThen you will be pretty safe. note: time ain't a spatial dimension!! so anyways you must embark on a really difficult journey.\n go do it! (by going through the teleporter)",
             "face": "dragon.png"
         }
     },

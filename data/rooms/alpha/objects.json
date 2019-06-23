@@ -8,8 +8,8 @@
         "id": "d1",
         "body": {
             "title": "some info: you are gonna be attacked soon",
-            "description": "hey. good job. I thought you would totally get lost before getting here. i was gonna give you a gps system (min path finding in a graph = Dijkstra's alg!!!!) but the gui is going to be really hard to make. so you are on your own. except, not for long! the mages are gonna come after you. you gotta fight them. don't worry its pretty easy. just press space to shoot. note that you can't run while shooting, that would be like running while carrying scisors which isn't safe. but neither can the mages. note that the mages have longer range weapons, but that also means that they stand still longer to shoot. (i'm really covertly offering you a strategy to beat them)",
-            "face": "crab.png"
+            "description": "hey. good job. I thought you would totally get lost before getting here. \nI was gonna give you a gps system (min path finding in a graph = Dijkstra's alg!!!!) but the gui is going to be really hard to make. \nSo you are on your own. except, not for long! \nthe mages are gonna come after you. you gotta fight them. don't worry its pretty easy. just press space to shoot. \nNote that you can't run while shooting, that would be like running while carrying scisors which isn't safe. \nBut neither can the mages. note that the mages have longer range weapons, but that also means that they\n stand still longer to shoot. (i'm really covertly offering you a strategy to beat them)",
+            "face": "balrog.png"
         }
     },
     {

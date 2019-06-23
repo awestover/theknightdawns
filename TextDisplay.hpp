@@ -6,8 +6,8 @@
 class TextDisplay {
 	protected:
 		sf::View view;
-		const float TEXT_PADDING = 10.0f;
-		const int TEXT_SIZE = 20;
+		float TEXT_PADDING = 10.0f;
+		int TEXT_SIZE = 20;
 		sf::Font font;
 		std::map<std::string, sf::Text*> texts;
 		void initializeText(sf::Text *text, float x, float y, std::string initString);

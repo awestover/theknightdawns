@@ -7,9 +7,9 @@
         "type": "dialogue",
         "id": "d1",
         "body": {
-            "title": "quest, part 1",
-            "description": "This is the final quest",
-            "face": "crab.png"
+            "title": "your prize",
+            "description": "yup its what you've been waiting for for 8 ish rooms. good job. you deserve the prize of seeing this beautiful game.\nfor more enjoyment plz join the development team. we (ie alek) need story creators, artists, and coders\ncontact me if interested. in terms of describing game development, I can only quote some famous guy who once said \n \"life's just a gui for interacting with a big json file\" and extend his thought to say so is this game (actually a lot of json files...)\nanyways, thanks for playing too!! it means alot. probably means approx 7000 to be exact.\nsee yah (if you are someone I know and see regularly, not if you are some random person who found this on github)\n",
+            "face": "dino.png"
         }
     }
 ]

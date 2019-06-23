@@ -18,11 +18,6 @@
 #include "BattleStats.hpp"
 #include "Enemy.hpp"
 
-// void shutdown(int numRooms, sf::RenderWindow *window, Room **rooms){
-//     window->close();
-//     free(rooms);
-// }
-
 int main(int argc, char** argv) {
 	srand(time(NULL));
 	std::string username;
@@ -54,28 +49,18 @@ int main(int argc, char** argv) {
 		sf::Texture faceSprite;
 		if(!faceSprite.loadFromFile("data/imgs/"+faceName))
 			std::cout << "error loading image "<< faceName << std::endl;
-		std::cout << "loading face " << faceName << std::endl;
 		faces[faceName] = faceSprite;
 	}
 
 	std::ifstream roomFin("data/rooms/rooms.txt");
 	int numRooms;
 	roomFin>>numRooms;
-	// std::map<std::string, int> roomNameIdxs;
 	std::map<std::string, Room*> rooms;
 	for (int i = 0; i < numRooms; ++i) {
 		std::string roomName;
 		roomFin>>roomName;
-		// roomNameIdxs[tmp] = i;
-		std::cout << "creating room " << roomName << std::endl;
 		rooms[roomName] = new Room(roomName);
 	}
-
-	// Room **rooms = (Room**)malloc(sizeof(Room)*numRooms);
-	// for(std::map<std::string, int>::iterator itr = roomNameIdxs.begin(); itr != roomNameIdxs.end(); ++itr){
-	//     std::cout << "loading room " << itr->first << std::endl;
-	//     rooms[itr->second] = new Room(itr->first);
-	// }
 
 	Player player(rooms["startRoom"]->getName(), username);
 	Enemy testEnemy;
@@ -113,7 +98,6 @@ int main(int argc, char** argv) {
         while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				window.close();
-				// shutdown(numRooms, &window, rooms);
 				return 0;
 			}
 			else if (event.type == sf::Event::Resized) {
@@ -122,7 +106,6 @@ int main(int argc, char** argv) {
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Q){
 					window.close();
-					// shutdown(numRooms, &window, rooms);
 					std::cout << "no seg faults yet..." << std::endl;
 					return 0;
 				}
@@ -159,20 +142,14 @@ int main(int argc, char** argv) {
 				}
 				if(!rooms[player.getCurRoom()]->collidesWithObstacles(proposedPos))
 					player.setPos(proposedPos.x, proposedPos.y);
-				// if(!rooms[roomNameIdxs[player.getCurRoom()]]-> collidesWithObstacles(proposedPos)){
-					// player.setPos(proposedPos.x, proposedPos.y);
-				// }
 			}
 		}
 
-		// updateCameraPos(&cameraPos, player.getDrawPos(), rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
 		updateCameraPos(&cameraPos, player.getDrawPos(), rooms[player.getCurRoom()]->getDimensions());
 		mainView.setCenter(cameraPos);
         window.clear(BLACK);
 		window.setView(mainView);
 
-		// rooms[roomNameIdxs[player.getCurRoom()]]->draw(&window, &faces);
-		// rooms[roomNameIdxs[player.getCurRoom()]]->handleObjectCollisions(&player, &dialogue, &hud, &faces, &battleMode);
 		rooms[player.getCurRoom()]->draw(&window, &faces, battleMode);
 		rooms[player.getCurRoom()]->handleObjectCollisions(&player, &dialogue, &hud, &faces, &battleMode);
 		player.draw(&window);
@@ -182,10 +159,11 @@ int main(int argc, char** argv) {
 			testEnemy.handleProjectileCollisions(&player, &battleStats, "player");
 			testEnemy.draw(&window);
 			if(testEnemy.positionsSynced() && !testEnemy.shootingProjectile())
-				// testEnemy.wander(rooms[roomNameIdxs[player.getCurRoom()]]->getDimensions());
 				testEnemy.wander(rooms[player.getCurRoom()]->getDimensions());
-			if(player.isDead() || testEnemy.isDead())
+			if(player.isDead() || testEnemy.isDead()){
 				battleMode = false;
+				dialogue.setOpenState(false);
+			}
 			battleStats.draw(&window);
 		}
 		else{ // normalMode
