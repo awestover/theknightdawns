@@ -1,69 +1,54 @@
 [
     {
         "pos": [
-            8,
-            15
+					5, 
+					1
         ],
         "type": "dialogue",
         "id": "d1",
         "body": {
             "title": "quest, part 1",
-            "description": "This is the first quest",
+            "description": "OK. I gotta break it to yah. All of your 'knight' friends are super dead. these mage guys didn't like them, so they totally killed all of them. not really sure why they haven't gotten you yet, but they probably will soon so don't worry. anyways, that kinda sucks. pretty much your only recourse is to go on a super long journey and find a really powerful magical artifact that will teleport them all into an affine plane in R4 that is parallel to the 3 dimensional hyperplane that you exist in. Then you will be pretty safe. note: time ain't a spatial dimension!! so anyways you must embark on a really difficult journey. go do it! (by going through the teleporter)",
             "face": "dragon.png"
         }
     },
     {
         "pos": [
-            5,
-            10
+					15, 
+					1
         ],
         "type": "dialogue",
         "id": "d2",
         "body": {
-            "title": "quest, part 2",
-            "description": "This is a follow up quest",
+            "title": "really motivating stuff",
+            "description": "If you need more motivation to continue on to your quest then find the other teleporter to a different room which is super motivating and stuff",
             "face": "crab.png"
         }
     },
     {
         "pos": [
-            1,
-            2
-        ],
-        "type": "battlePortal",
-        "id": "b1",
-        "body": {
-            "newRoom": "nextRoom",
-            "newPos": [
-                1,
-                2
-            ]
-        }
-    },
-    {
-        "pos": [
-            1,
-            5
+                12,
+                11
         ],
         "type": "teleporter",
         "id": "t1",
         "body": {
-            "newRoom": "nextRoom",
+            "newRoom": "alpha",
             "newPos": [
-                1,
-                1
+                10,
+                12
             ]
         }
     },
     {
         "pos": [
-            5,
-            1
+                30,
+                1
         ],
         "type": "teleporter",
         "id": "t2",
         "body": {
-            "newRoom": "battleRoom",
+            "newRoom": "reallyMotivatingStuff",
             "newPos": [
                 1,
                 1

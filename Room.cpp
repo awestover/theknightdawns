@@ -15,6 +15,7 @@ Room::Room (std::string roomName){
 
 	bg_texture.loadFromFile("data/rooms/"+roomName+"/bg.png");
 	bg_sprite.setTexture(bg_texture);
+	bg_sprite.setScale((TILE_WIDTH*dimensions.x)/(1.0*bg_sprite.getTextureRect().width), (TILE_WIDTH*dimensions.y)/(1.0*bg_sprite.getTextureRect().height));
 
 	rock_texture.loadFromFile("data/imgs/rock.png");
 	rock_sprite.setTexture(rock_texture);
@@ -22,6 +23,7 @@ Room::Room (std::string roomName){
 	
 	animatedObjects["teleporter"] = new Animated(sf::Vector2i(100, 100), "data/imgs/teleporter.png");
 	animatedObjects["battlePortal"] = new Animated(sf::Vector2i(100, 100), "data/imgs/battlePortal.png");
+	animatedObjects["antiBattlePortal"] = new Animated(sf::Vector2i(100, 100), "data/imgs/antiBattlePortal.png");
 
 	std::ifstream obstacles_fin("data/rooms/"+roomName+"/obstacles.txt");
 	obstacles = (bool**)malloc(sizeof(bool*)*dimensions.y);
@@ -38,7 +40,7 @@ Room::Room (std::string roomName){
 	objects_fin >> objects;
 }
 
-void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *faces){
+void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *faces, bool battleMode){
 	window->draw(bg_sprite);
 
 	for(int i = 0; i < dimensions.y; i++){
@@ -62,7 +64,12 @@ void Room::draw(sf::RenderWindow *window, std::map<std::string, sf::Texture> *fa
 			dialogue_prompt_sprite.setTexture(dialogueTextureTmp);
 			dialogue_prompt_sprite.setPosition(tmp);
 			window->draw(dialogue_prompt_sprite);
-			
+		}
+		else if((*it)["type"] == "antiBattlePortal"){
+			if(!battleMode){
+				animatedObjects[(*it)["type"]]->changePos(tmp.x, tmp.y);
+				animatedObjects[(*it)["type"]]->draw(window);
+			}
 		}
 		else { // types: teleporter, battlePortal
 			animatedObjects[(*it)["type"]]->changePos(tmp.x, tmp.y);
@@ -103,12 +110,23 @@ void Room::handleObjectCollisions(Player *player, Dialogue *dialogue, HUD *hud, 
 				hud->setRoom(player->getCurRoom());
 			}
 			else if((*it)["type"] == "battlePortal"){
-				sf::Vector2i newPos;
-				newPos.x = (*it)["body"]["newPos"][0];
-				newPos.y = (*it)["body"]["newPos"][1];
-				player->teleport((*it)["body"]["newRoom"], newPos);
-				hud->setRoom(player->getCurRoom());
-				(*battleMode) = true;
+				if(!(*battleMode)){
+					sf::Vector2i newPos;
+					newPos.x = (*it)["body"]["newPos"][0];
+					newPos.y = (*it)["body"]["newPos"][1];
+					player->teleport((*it)["body"]["newRoom"], newPos);
+					hud->setRoom(player->getCurRoom());
+					(*battleMode) = true;
+				}
+			}
+			else if((*it)["type"] == "antiBattlePortal"){
+				if(!(*battleMode)) {
+					sf::Vector2i newPos;
+					newPos.x = (*it)["body"]["newPos"][0];
+					newPos.y = (*it)["body"]["newPos"][1];
+					player->teleport((*it)["body"]["newRoom"], newPos);
+					hud->setRoom(player->getCurRoom());
+				}
 			}
 		}
 	}

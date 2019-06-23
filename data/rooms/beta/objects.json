@@ -1,0 +1,30 @@
+[
+    {
+        "pos": [
+            18,
+            15
+        ],
+        "type": "dialogue",
+        "id": "d1",
+        "body": {
+            "title": "quest, part 1",
+            "description": "This is the first quest",
+            "face": "crab.png"
+        }
+    },
+    {
+        "pos": [
+            10,
+            5
+        ],
+        "type": "battlePortal",
+        "id": "b1",
+        "body": {
+            "newRoom": "battlePart2",
+            "newPos": [
+                20,
+                20
+            ]
+        }
+    }
+]

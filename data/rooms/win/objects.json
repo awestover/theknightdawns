@@ -1,0 +1,15 @@
+[
+    {
+        "pos": [
+            18,
+            15
+        ],
+        "type": "dialogue",
+        "id": "d1",
+        "body": {
+            "title": "quest, part 1",
+            "description": "This is the final quest",
+            "face": "crab.png"
+        }
+    }
+]

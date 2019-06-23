@@ -1,3 +1,9 @@
-2
+8
 crab.png
 dragon.png
+balrog.png
+butterfly.png
+chicken.png
+dino.png
+narwhal.png
+shark.png

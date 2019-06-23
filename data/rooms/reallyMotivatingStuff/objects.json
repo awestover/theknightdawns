@@ -1,0 +1,29 @@
+[
+    {
+        "pos": [
+            8,
+            8
+        ],
+        "type": "dialogue",
+        "id": "d1",
+        "body": {
+            "title": "some more motivation",
+            "description": "ok  you need more of a reason to go on this quest? well you got nothing better to do. so now you have to do it.",
+            "face": "shark.png"
+        }
+    },
+    {
+        "pos": [
+            10,
+            5
+        ],
+        "type": "teleporter",
+        "id": "t1",
+        "body": {
+            "newRoom": "startRoom",
+            "newPos": [
+							8, 11
+            ]
+        }
+    }
+]

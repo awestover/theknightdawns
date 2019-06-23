@@ -10,7 +10,7 @@ const float DIALOGUE_VIEWPORT_RELATIVE_HEIGHT = 0.2;
 const float BATTLE_STATS_VIEWPORT_RELATIVE_HEIGHT = 0.2;
 const float HUD_VIEWPORT_RELATIVE_HEIGHT = 0.04;
 const sf::Color BLACK(0,0,0);
-const int FRAME_RATE = 120;
+const int FRAME_RATE = 240;
 /*! \enum DIRECTIONS
  * in my sprite sheets we are going to follow the conventions that
  * 	- sprites are TILE_WIDTH X TILE_WIDTH

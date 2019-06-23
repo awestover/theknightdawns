@@ -4,10 +4,10 @@
             10,
             5
         ],
-        "type": "teleporter",
+        "type": "antiBattlePortal",
         "id": "t1",
         "body": {
-            "newRoom": "win",
+            "newRoom": "delta",
             "newPos": [
                 20,
                 20

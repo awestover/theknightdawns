@@ -1,4 +1,11 @@
-3
+10
 startRoom
 nextRoom
 battleRoom
+debrief
+battlePart2
+alpha
+beta
+delta
+win
+reallyMotivatingStuff
