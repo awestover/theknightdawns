@@ -3,6 +3,7 @@
 
 ## information: 
 An amazing game. NOTE: the makefile is very broken, `make clean` every time you get an error.
+![graph coming soon](weighted_graph.png "Maps coming soon")
 
 ## how to play it:
   * Follow installation directions below
@@ -99,6 +100,12 @@ echo "eval \$($(brew -prefix)/bin/brew shellenv)" >>~/.profile
 ***************************************************************************************************
 ***************************************************************************************************
 #### TODO
+
+## make it possible to input a game map as a pixel grid, and have python read in the pixel colors (approximate what red is, probably kmeans is overkill / trash just go for whatever is closest...)
+eg a black pixel / rect could mean "rock"
+and a red pixel could mean "battle portal"
+etc
+visual design is just easier
 
 ### add story line & design
   - croud sourced???
