@@ -3,7 +3,6 @@
 #include "Dialogue.hpp"
 #include "HUD.hpp"
 #include "BattleStats.hpp"
-// float abs(float x);
 int sgn(int x);
 float mint(float x, float y);
 float maxt(float x, float y);

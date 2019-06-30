@@ -1,5 +1,21 @@
 #ifndef DIJKSTRA_H
 #define DIJKSTRA_H value
-// returns the index of the teleporter that you should go towards to go on the shorest path from teleporter index start to teleporter index end
-int getPath(int **dists, int n, int start, int end);
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
+#include "SFML/Graphics.hpp"
+
+class Dijkstra{
+	private: 
+		int** baseGraph;
+		int** specificGraph; // specific graph adds a vertex that is the start location and a vertex that is the end location
+		json teleporterIdxConversion;
+	 	int teleporterCt;
+
+		int taxicabDist(int x0, int y0, int x1, int y1);
+		void setSpecificGraph(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom);
+		int findPath();
+	public:
+		Dijkstra();
+		int getOptimalPath(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom);
+};
 #endif /* ifndef DIJKSTRA_H */

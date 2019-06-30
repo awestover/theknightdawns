@@ -5,6 +5,16 @@
 An amazing game. NOTE: the makefile is very broken, `make clean` every time you get an error.
 ![graph coming soon](weighted_graph.png "Maps coming soon")
 
+## N.B.
+Let G(V,E) be a bidirectional weighted graph. I represent G with an ajacency matrix where `A[i][j]` describes the cost of travelling from vertex `i` to vertex `j`. Basically the only biderectional weighted graph that I have is a graph where each vertex represents a teleporter, and an edge is either
+  1) If the teleporters are in the same room it is the taxicab (approx same as euclidean, satisfies triangle inequality) distance between the teleporter's entrances
+  2) If the teleporters are not in the same room then if teleporter `i` leads to the room that teleporter `j` is in `A[i][j]` is the distance from the exit of teleporter `i` to the entrance to teleporter `j` and `A[j][i]` is probably `0`.
+  3) 0 represents a teleporter that is not dirrectly reachable from another teleporter
+  4) note: no self loops
+  5) note: it is probably a connected grpah (or that would be a waste of the game design... )
+  6) note: metric inequality DOES NOT HOLD in general. beccause why would teleportation obey the triangle inequality!!!
+  7) Note again that the matrix is NOT symmetric. Be careful!!
+
 ## how to play it:
   * Follow installation directions below
   * run `sh main.sh` and follow specified directions
