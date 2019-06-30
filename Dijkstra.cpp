@@ -20,10 +20,10 @@ Dijkstra::Dijkstra(){
 		}
 	}
 	specificGraph = (int**)malloc(sizeof(int*)*(teleporterCt+2));
-	for (int i = 0; i < teleporterCt; i++) {
-		baseGraph[i] = (int*)malloc(sizeof(int)*(teleporterCt+2));
-		for (int j = 0; j < teleporterCt; j++) {
-			baseGraph[i][j] = allGraphData["graph"][i][j];
+	for (int i = 0; i < teleporterCt+2; i++) {
+		specificGraph[i] = (int*)malloc(sizeof(int)*(teleporterCt+2));
+		for (int j = 0; j < teleporterCt+2; j++) {
+			specificGraph[i][j] = 0;
 		}
 	}
 	teleporterIdxConversion = allGraphData["idxConversion"];
@@ -99,22 +99,23 @@ int Dijkstra::taxicabDist(int x0, int y0, int x1, int y1){
 void Dijkstra::setSpecificGraph(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom) {
 	for (int i = 1; i < teleporterCt+1; i++) {
 		for (int j = 1; j < teleporterCt+1; j++) {
-			specificGraph[i][j] = baseGraph[i][j];
+			specificGraph[i][j] = baseGraph[i-1][j-1];
 		}
 	}
 	// note: I'm intentionally only adding edges 1 way here: even though I guess you could technically return to start you never will
 	for (int i = 0; i < teleporterCt; i++) {
 		if(teleporterIdxConversion[i]["room"] == startRoom){
-			specificGraph[0][i] = taxicabDist(startPos.x, startPos.y, teleporterIdxConversion[i]["pos"][0], teleporterIdxConversion[i]["pos"][1]);
+			specificGraph[0][i+1] = taxicabDist(startPos.x, startPos.y, teleporterIdxConversion[i]["pos"][0], teleporterIdxConversion[i]["pos"][1]);
 		}
 		if(teleporterIdxConversion[i]["room"] == endRoom){
-			specificGraph[i][teleporterCt+1] = taxicabDist(teleporterIdxConversion[i]["pos"][0], teleporterIdxConversion[i]["pos"][1], endPos.x, endPos.y);
+			specificGraph[i+1][teleporterCt+1] = taxicabDist(teleporterIdxConversion[i]["pos"][0], teleporterIdxConversion[i]["pos"][1], endPos.x, endPos.y);
 		}
 	}
 }
 
 int Dijkstra::getOptimalPath(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom){
 	setSpecificGraph(startPos, startRoom, endPos, endRoom);
+	std::cout << "finding path" << std::endl;
 	int path = findPath();
 	return path;
 }

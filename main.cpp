@@ -84,6 +84,8 @@ int main(int argc, char** argv) {
 		player.updateQuest();
 
 	Dijkstra dijkstra;
+	sf::Vector2i sus(0,0);
+	dijkstra.getOptimalPath(player.getTilePos(), player.getCurRoom(), sus, "nextRoom");
 
 	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;
