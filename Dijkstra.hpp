@@ -16,6 +16,6 @@ class Dijkstra{
 		int findPath();
 	public:
 		Dijkstra();
-		int getOptimalPath(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom);
+		sf::Vector2f getOptimalPath(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom);
 };
 #endif /* ifndef DIJKSTRA_H */

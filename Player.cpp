@@ -26,10 +26,28 @@ Player::Player(std::string roomName, std::string username) {
 	quests_fin >> quests;
 
 	health = userData["baseStats"]["health"];
+
+	arrowTexture.loadFromFile("data/imgs/arrow.png");
+	arrowSprite.setTexture(arrowTexture);
 }
 
 // other
 
+void Player::drawArrow(sf::RenderWindow *window){
+	sf::Vector2i sus(0,0);
+	sf::Vector2f arrowDirrection = dijkstra.getOptimalPath(getTilePos(), getCurRoom(), sus, "nextRoom");
+	std::cout << arrowDirrection.x << " " << arrowDirrection.y << std::endl;
+	arrowSprite.setPosition(-arrowDims/2, -arrowDims/2);
+	sf::Transform rotateToPoint(arrowDirrection.x, -arrowDirrection.y, 0,
+								arrowDirrection.y, arrowDirrection.x, 0, 
+									0, 0, 1);
+	int r = visualDimensions.x;
+	sf::Transform moveToPos(1,0,draw_pos.x+visualDimensions.x/2+arrowDirrection.x*r,
+							0,1,draw_pos.y+visualDimensions.y/2+arrowDirrection.y*r,
+							0,0,1);
+
+	window->draw(arrowSprite, moveToPos*rotateToPoint);
+}
 
 void Player::writeUserData(){
 	std::ofstream userdata_fout("data/users/"+username+".json");

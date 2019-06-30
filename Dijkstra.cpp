@@ -64,7 +64,6 @@ int Dijkstra::findPath(){
 					nodesToCheck.push(i);
 					optimalPaths[i].clear();
 					for (auto it = optimalPaths[cur].begin(); it != optimalPaths[cur].end(); it++) {
-						std::cout << (*it) << std::endl;
 						optimalPaths[i].push_back(*it);
 					}
 					optimalPaths[i].push_back(cur);
@@ -76,18 +75,23 @@ int Dijkstra::findPath(){
 	int minDist = INT_MAX;
 	int achieved = 0;
 	for (int i = 0; i < n; i++) {
-		std::cout << "distsFromStart["<<i<<"] = "<< distsFromStart[i] << std::endl;
 		if (distsFromStart[i] < minDist){
 			achieved = i;
 			minDist = distsFromStart[i];
 		}
 	}
 
-	std::cout << "optimal path" << std::endl;
-	for(auto it = optimalPaths[end].begin(); it != optimalPaths[end].end(); it++){
-		std::cout << (*it) << "->";
-	}
-	std::cout << end << std::endl;
+	// std::cout << "optimal path" << std::endl;
+	// for(auto it = optimalPaths[end].begin(); it != optimalPaths[end].end(); it++){
+	//     std::cout << (*it) << "->";
+	// }
+	// std::cout << end << std::endl;
+	// std::cout << "optimal path" << std::endl;
+	// std::cout << "start->";
+	// for(auto it = optimalPaths[end].begin()+1; it != optimalPaths[end].end(); it++){
+	//     std::cout << teleporterIdxConversion[(*it)-1]["room"] << "->";
+	// }
+	// std::cout << "end" << std::endl;
 
 	return optimalPaths[end][1];
 }
@@ -113,10 +117,19 @@ void Dijkstra::setSpecificGraph(sf::Vector2i startPos, std::string startRoom, sf
 	}
 }
 
-int Dijkstra::getOptimalPath(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom){
+sf::Vector2f Dijkstra::getOptimalPath(sf::Vector2i startPos, std::string startRoom, sf::Vector2i endPos, std::string endRoom){
 	setSpecificGraph(startPos, startRoom, endPos, endRoom);
-	std::cout << "finding path" << std::endl;
-	int path = findPath();
-	return path;
+	// std::cout << "finding path" << std::endl;
+	int firstPoint = findPath();
+	std::cout << firstPoint << std::endl;
+	int goalX = teleporterIdxConversion[firstPoint]["pos"][0];
+	int goalY = teleporterIdxConversion[firstPoint]["pos"][1];
+	sf::Vector2f delta(goalX-startPos.x, goalY-startPos.y);
+	float mag = sqrt(delta.x*delta.x+delta.y*delta.y);
+	if(mag!=0){
+		delta.x /= mag;
+		delta.y /= mag;
+	}
+	return delta;
 }
 

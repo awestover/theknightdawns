@@ -93,6 +93,39 @@ echo "eval \$($(brew -prefix)/bin/brew shellenv)" >>~/.profile
   instead do 
   `#define HUD_H`
 
+## transformation matrices:
+To specify all possible 2d transformation we need a 3 by 3 matrix.
+Translation:
+```
+[[1,0,tx],
+[0,1,ty],
+[0,0,1]]
+```
+Scale:
+```
+[[sx,0,0],
+[0,sy,0],
+[0,0,sz]]
+```
+Rotation:
+```
+[[cosx,-sinx,0],
+[sinx,cosx,0],
+[0,0,sz]]
+```
+Shear:
+```
+[[1,shx,0],
+[shy,1,0],
+[0,0,1]]
+```
+One should NOTE:
+points are represented as 3 by 1 matrices (i.e. vectors) IN CONTRAST to in opengl where they are represented as the transpose of this
+so everything is mathy and normal UNLIKE opengl
+also, matrix multiplication satisfies that 
+doing `T_a` and then `T_b` 
+is the same as just doing `T_b*T_a`	
+
 ## how to add a sprite
   put a bunch of imgs in 
   data/imgs

@@ -18,7 +18,6 @@
 #include "HUD.hpp"
 #include "BattleStats.hpp"
 #include "Enemy.hpp"
-#include "Dijkstra.hpp"
 
 int main(int argc, char** argv) {
 	srand(time(NULL));
@@ -82,10 +81,6 @@ int main(int argc, char** argv) {
 	hud.setRoom(player.getCurRoom());
 	if(player.questCompleted())
 		player.updateQuest();
-
-	Dijkstra dijkstra;
-	sf::Vector2i sus(0,0);
-	dijkstra.getOptimalPath(player.getTilePos(), player.getCurRoom(), sus, "nextRoom");
 
 	sf::Vector2f cameraPos;
 	cameraPos.x = 0; cameraPos.y = 0;
@@ -159,6 +154,7 @@ int main(int argc, char** argv) {
 		rooms[player.getCurRoom()]->draw(&window, &faces, battleMode);
 		rooms[player.getCurRoom()]->handleObjectCollisions(&player, &dialogue, &hud, &faces, &battleMode);
 		player.draw(&window);
+		player.drawArrow(&window);
 
 		if(battleMode){
 			if(testEnemy.isDead()){ // this is bad, is it even safe????
