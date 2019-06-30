@@ -8,6 +8,7 @@
 #include <fstream>
 #include <map>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "Player.hpp"
 #include "Room.hpp"
@@ -17,8 +18,41 @@
 #include "HUD.hpp"
 #include "BattleStats.hpp"
 #include "Enemy.hpp"
+#include "Dijkstra.hpp"
 
 int main(int argc, char** argv) {
+
+	// test Dijkstra
+	int n = 6;
+	int **dists = (int**)malloc(sizeof(int*)*n);
+	for (int i = 0; i < n; i++) {
+		dists[i] = (int*)calloc(n, sizeof(int));
+	}
+	// just some caution ;) in case i don't know what a pointer is...
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < n; j++) {
+			assert (dists[i][j]==0);
+		}
+	}
+	dists[0][1] = 2;
+	dists[2][1] = 1;
+	dists[5][1] = 3;
+	dists[2][3] = 4;
+	dists[5][3] = 4;
+	dists[3][4] = 5;
+	dists[5][4] = 4;
+
+	// vim is beautiful
+	dists[1][0] = 2;
+	dists[1][2] = 1;
+	dists[1][5] = 3;
+	dists[3][2] = 4;
+	dists[3][5] = 4;
+	dists[4][3] = 5;
+	dists[4][5] = 4;
+	getPath(dists, n, 0, 3);
+	//***************************************
+
 	srand(time(NULL));
 	std::string username;
 	if (argc == 2){
