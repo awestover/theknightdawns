@@ -36,7 +36,6 @@ Player::Player(std::string roomName, std::string username) {
 void Player::drawArrow(sf::RenderWindow *window){
 	sf::Vector2i sus(0,0);
 	sf::Vector2f arrowDirrection = dijkstra.getOptimalPath(getTilePos(), getCurRoom(), sus, "nextRoom");
-	std::cout << arrowDirrection.x << " " << arrowDirrection.y << std::endl;
 	arrowSprite.setPosition(-arrowDims/2, -arrowDims/2);
 	sf::Transform rotateToPoint(arrowDirrection.x, -arrowDirrection.y, 0,
 								arrowDirrection.y, arrowDirrection.x, 0, 
